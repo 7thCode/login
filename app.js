@@ -145,12 +145,10 @@ mongoose.connection.once("open", () => {
   });
 
 	passport.serializeUser(function (user, done) {
-		console.log("a");
 		done(null, user);
 	});
 
 	passport.deserializeUser(function (user, done) {
-		console.log("b");
 		done(null, user);
 	});
 
