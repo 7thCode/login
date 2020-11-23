@@ -178,22 +178,22 @@ mongoose.connection.once("open", () => {
 
 // データベースクローズ時
 mongoose.connection.on("closed", () => {
-		console.log("closed");
+	console.log("closed");
 });
 
 // データベース切断時
 mongoose.connection.on("disconnected", () => {
-		console.log("disconnected");
+	console.log("disconnected");
 });
 
 // データベース再接続時
 mongoose.connection.on("reconnected", () => {
-		console.log("reconnected");
+	console.log("reconnected");
 });
 
 // データベース接続エラー時
 mongoose.connection.on("error", (error) => {
-		console.log("error");
+	console.log("error");
 });
 
 
