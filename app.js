@@ -106,6 +106,22 @@ MONGOOSE_MODULE.connection.once("open", () => {
 	*/
 	// --------------------ここから-------------------- //
 
+
+	//  登録画面
+	app.get('/regist', (req, res) => {
+		res.sendFile(__dirname + '/public/assets/regist.html');
+	});
+
+	// ユーザ登録
+	app.post('/regist', (req, res) => {
+		LocalAccount.register(new LocalAccount({ username: req.body.username }), req.body.password).then(() => {
+			res.sendFile(__dirname + '/public/assets/success.html');
+		}).catch((e) => {
+			res.sendFile(__dirname + '/public/assets/failure.html');
+		})
+	});
+
+
 	// ログイン要求
 	app.post('/login',
 		PASSPORT_MODULE.authenticate('local', {
@@ -113,15 +129,6 @@ MONGOOSE_MODULE.connection.once("open", () => {
 			successRedirect: '/success',
 		})
 	);
-
-	// ユーザ登録
-	app.get('/regist', (req, res) => {
-		LocalAccount.register(new LocalAccount({ username: "user" }), "pass").then(() => {
-			res.sendFile(__dirname + '/public/assets/success.html');
-		}).catch((e) => {
-			res.sendFile(__dirname + '/public/assets/failure.html');
-		})
-	});
 
 	// ログイン画面
 	app.get('/login', (req, res) => {
