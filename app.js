@@ -123,12 +123,20 @@ MONGOOSE_MODULE.connection.once("open", () => {
 
 
 	// ログイン要求
-	app.post('/login',
-		PASSPORT_MODULE.authenticate('local', {
-			failureRedirect: '/failure',
-			successRedirect: '/success',
-		})
-	);
+	app.post('/login', (req, res) => {
+		PASSPORT_MODULE.authenticate("local", (error, account) => {
+			if (!error) {
+				if (account) {
+					res.redirect('/success');
+				} else {
+					res.redirect('/failure');
+				}
+			} else {
+				res.render('error', { message: error.message });
+			}
+		})(req, res);
+	});
+
 
 	// ログイン画面
 	app.get('/login', (req, res) => {
