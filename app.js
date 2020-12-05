@@ -122,7 +122,13 @@ MONGOOSE_MODULE.connection.once("open", () => {
 		PASSPORT_MODULE.authenticate("local", (error, account) => {
 			if (!error) {
 				if (account) {
-					res.redirect('/success');
+					req.login(account, (error) => {
+						if (!error) {
+							res.redirect('/success');
+						} else {
+							res.render('error', { message: error.message });
+						}
+					});
 				} else {
 					res.redirect('/failure');
 				}
@@ -144,7 +150,7 @@ MONGOOSE_MODULE.connection.once("open", () => {
 	// ログアウト要求
 	app.get('/logout', (req, res) => {
 		if (req.user) {
-			req.logout();
+			req.logout();　// これでセッション破棄
 			res.sendFile(__dirname + '/public/assets/login.html');
 		} else {
 			res.sendFile(__dirname + '/public/assets/not_loggedin.html');
