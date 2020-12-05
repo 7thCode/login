@@ -43,7 +43,6 @@ const MONGOOSE_MODULE = require('mongoose');
 // データベースに接続されていることを前提とする処理はこの中に。
 MONGOOSE_MODULE.connection.once("open", () => {
 
-
 	/*
 		Session
 
@@ -76,7 +75,6 @@ MONGOOSE_MODULE.connection.once("open", () => {
 
 
 
-
 	/*
 		Passport
 
@@ -102,10 +100,8 @@ MONGOOSE_MODULE.connection.once("open", () => {
 
 	/*
 		Application
-
 	*/
 	// --------------------ここから-------------------- //
-
 
 	//  登録画面
 	app.get('/regist', (req, res) => {
@@ -121,7 +117,6 @@ MONGOOSE_MODULE.connection.once("open", () => {
 		})
 	});
 
-
 	// ログイン要求
 	app.post('/login', (req, res) => {
 		PASSPORT_MODULE.authenticate("local", (error, account) => {
@@ -136,7 +131,6 @@ MONGOOSE_MODULE.connection.once("open", () => {
 			}
 		})(req, res);
 	});
-
 
 	// ログイン画面
 	app.get('/login', (req, res) => {
@@ -211,7 +205,6 @@ MONGOOSE_MODULE.connection.on("reconnected", () => {
 MONGOOSE_MODULE.connection.on("error", (error) => {
 	console.log("error");
 });
-
 
 // Mongo接続オプション
 const options = {
