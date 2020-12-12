@@ -80,7 +80,12 @@ MONGOOSE_MODULE.connection.once("open", () => {
 
 		認証モジュール
 		アカウントレコード作成、パスワード認証/ハッシュ化などを行う
+		requestオブジェクトにlogin(),logout()メソッドが追加される。
+		https://knimon-software.github.io/www.passportjs.org/guide/login/
+		https://knimon-software.github.io/www.passportjs.org/guide/logout/
 
+		連携承認
+		https://knimon-software.github.io/www.passportjs.org/guide/authorize/
 	*/
 	// --------------------ここから--------------------
 
@@ -175,6 +180,38 @@ MONGOOSE_MODULE.connection.once("open", () => {
 			res.sendFile(__dirname + '/public/assets/login.html');
 		}
 	});
+
+	/*
+		Upload
+	*/
+	// --------------------ここから-------------------- //
+	const multer = require('multer')
+/*
+	const upload = multer({
+			storage: multer.diskStorage({
+				destination: (req, file, cb) => {
+					cb(null, __dirname + '/uploads');
+				},
+				filename: (req, file, cb) => {
+					cb(null, file.originalname);
+				}
+			})
+		})
+*/
+	const upload = multer({ dest: 'uploads/' })
+
+	// アップロード画面
+	app.get('/upload', (req, res) => {
+		res.sendFile(__dirname + '/public/assets/upload.html');
+	});
+
+	// アップロード
+	app.post('/upload', upload.single('file'), (req, res) => {
+		res.send(req.file.originalname + ' upload success');
+	})
+
+	// --------------------ここまで-------------------- //
+
 
 	// エラー
 	app.use((req, res, next) => {
