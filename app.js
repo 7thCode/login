@@ -18,7 +18,7 @@ app.set('view engine', 'jade');
 // app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());≠
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/', indexRouter);
@@ -108,70 +108,56 @@ MONGOOSE_MODULE.connection.once("open", () => {
 	*/
 	// --------------------ここから-------------------- //
 
-	//  登録画面
-	app.get('/regist', (req, res) => {
-		res.sendFile(__dirname + '/public/assets/regist.html');
+	// ログイン済み？
+	app.get('/user', (req, res) => {
+		if (req.user) {
+			res.json({status:0, value: req.user});
+		} else {
+			res.json({status:-1, value: null});
+		}
 	});
 
-	// ユーザ登録
-	app.post('/regist', (req, res) => {
-		LocalAccount.register(new LocalAccount({ username: req.body.username }), req.body.password).then(() => {
-			res.sendFile(__dirname + '/public/assets/success.html');
-		}).catch((e) => {
-			res.sendFile(__dirname + '/public/assets/failure.html');
-		})
-	});
-
-	// ログイン要求
+	// ログイン
 	app.post('/login', (req, res) => {
 		PASSPORT_MODULE.authenticate("local", (error, account) => {
 			if (!error) {
 				if (account) {
 					req.login(account, (error) => {
 						if (!error) {
-							res.redirect('/success');
+							res.json({status:0, value: req.user, message:"OK"});
 						} else {
-							res.render('error', { message: error.message });
+							res.json({status:-1, value: {}, message:error.message});
 						}
 					});
 				} else {
-					res.redirect('/failure');
+					res.json({status:-2, message:"user found or password missmatch."});
 				}
 			} else {
-				res.render('error', { message: error.message });
+				res.json({status:-1, message:error.message});
 			}
 		})(req, res);
 	});
 
-	// ログイン画面
-	app.get('/login', (req, res) => {
-		if (req.user) {
-			res.sendFile(__dirname + '/public/assets/already.html');
-		} else {
-			res.sendFile(__dirname + '/public/assets/login.html');
-		}
-	});
-
-	// ログアウト要求
+	// ログアウト
 	app.get('/logout', (req, res) => {
 		if (req.user) {
-			req.logout();　// これでセッション破棄
-			res.sendFile(__dirname + '/public/assets/login.html');
+			req.logout();
+			res.json({status:0, value: null, message:"OK"});
 		} else {
-			res.sendFile(__dirname + '/public/assets/not_loggedin.html');
+			res.json({status:-1, value: {}, message: "not logged in."});
 		}
 	});
 
-	// 成功画面
-	app.get('/success', (req, res) => {
-		res.sendFile(__dirname + '/public/assets/success.html');
+	// ユーザ登録
+	app.post('/register', (req, res) => {
+		LocalAccount.register(new LocalAccount({ username: req.body.username }), req.body.password).then(() => {
+			res.json({status:0, value: null, message:"OK"});
+		}).catch((e) => {
+			res.json({status:-1, message:error.message});
+		})
 	});
 
-	// 失敗画面
-	app.get('/failure', (req, res) => {
-		res.sendFile(__dirname + '/public/assets/failure.html');
-	});
-
+/*
 	// 秘匿画面
 	app.get('/secret', (req, res) => {
 		if (req.user) {
@@ -181,6 +167,13 @@ MONGOOSE_MODULE.connection.once("open", () => {
 		}
 	});
 
+	//  登録画面
+	app.get('/regist', (req, res) => {
+		res.sendFile(__dirname + '/public/assets/regist.html');
+	});
+
+
+*/
 	/*
 		Upload
 	*/
@@ -211,7 +204,6 @@ MONGOOSE_MODULE.connection.once("open", () => {
 	})
 
 	// --------------------ここまで-------------------- //
-
 
 	// エラー
 	app.use((req, res, next) => {
