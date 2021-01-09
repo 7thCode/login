@@ -52,7 +52,7 @@ MONGOOSE_MODULE.connection.once("open", () => {
 	// --------------------ここから-------------------- //
 
 	// const SESSION_MODULE = require('./session');
-	// app.use(SESSION_MODULE.session);
+	// app.use(SESSION_MODULE.session);≠
 
 	const SESSION_MODULE = require('express-session');						// Express Session
 	const MONGOSTORE_CLASS = require("connect-mongo")(SESSION_MODULE);		// 暗号化されたクッキーとデータベースに保存されたセッションを関連づける

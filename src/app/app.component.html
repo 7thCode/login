@@ -2,13 +2,13 @@
 
 	<div *ngIf="!user">
 		<div style="margin:8px">
-			<input type="text" [(ngModel)]="username">
+			username:<input type="text" [(ngModel)]="username">
 		</div>
 		<div style="margin:8px">
-			<input type="password" [(ngModel)]="password">
+			password:<input type="password" [(ngModel)]="password">
 		</div>
 		<div style="margin:8px">
-			<button (click)="onLogin()">OK</button>
+			<button (click)="onLogin()">Login</button>
 		</div>
 		<div style="margin:8px">
 			<button (click)="onRegister()">Regist</button>
@@ -18,7 +18,6 @@
 
 	<div *ngIf="user">
 		<div style="margin:8px">logged in.</div>
-		<div style="margin:8px">{{user.username}}</div>
 		<div style="margin:8px">
 			<button (click)="onLogout()">Logout</button>
 		</div>

@@ -1,31 +1,45 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-
 import {AuthService} from './app.service';
 
+/*
+* コンポーネント定義
+*/
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.css']
 })
 
+/*
+*　クラス定義
+*/
 export class AppComponent implements OnInit {
 
-	public user: any;
+	// バインド対象
+	public user: any;			// ログインユーザ
+	public message: string;		// メッセージ
+	public username: string;	// ユーザ名
+	public password: string;	// パスワード
 
-	public message: string;
-
-	public username: string;
-	public password: string;
-
+	/*
+	* コンストラクタ
+	* AppComponentクラスがインスタンス化される際に最初に一回だけ実行される
+	* */
 	constructor(
 		public changeDetectorRef: ChangeDetectorRef,
 		public auth: AuthService) {
 	}
 
+	/*
+	* AppComponentの初期化
+	*/
 	public ngOnInit(): void {
 		this.isLogin();
 	}
 
+	/*
+	*　ログインしてる？
+	*/
 	public isLogin(): void {
 		try {
 			this.auth.user((error: any, result: any): void => {
@@ -40,6 +54,9 @@ export class AppComponent implements OnInit {
 		}
 	}
 
+	/*
+	*　ログイン
+	*/
 	public onLogin(): void {
 		this.auth.login(this.username, this.password, (error: any, result: any): void => {
 			if (!error) {
@@ -52,6 +69,9 @@ export class AppComponent implements OnInit {
 		});
 	}
 
+	/*
+	*　ログアウト
+	*/
 	public onLogout(): void {
 		this.auth.logout((error: any, result: any): void => {
 			if (!error) {
@@ -64,6 +84,9 @@ export class AppComponent implements OnInit {
 		});
 	}
 
+	/*
+	*　ユーザ登録
+	*/
 	public onRegister(): void {
 		this.auth.register(this.username, this.password, {},(error: any, result: any): void => {
 			if (!error) {
