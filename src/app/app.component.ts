@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
 
 	/*
 	* AppComponentの初期化
+	* コンポーネントの初期化時に実行される
 	*/
 	public ngOnInit(): void {
 		this.isLogin();
