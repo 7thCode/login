@@ -133,14 +133,31 @@ function AppComponent_div_2_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
+/*
+* コンポーネント定義
+*/
+/*
+*　クラス定義
+*/
 class AppComponent {
+    /*
+    * コンストラクタ
+    * AppComponentクラスがインスタンス化される際に最初に一回だけ実行される
+    * */
     constructor(changeDetectorRef, auth) {
         this.changeDetectorRef = changeDetectorRef;
         this.auth = auth;
     }
+    /*
+    * AppComponentの初期化
+    * コンポーネントの初期化時に実行される
+    */
     ngOnInit() {
         this.isLogin();
     }
+    /*
+    *　ログインしてる？
+    */
     isLogin() {
         try {
             this.auth.user((error, result) => {
@@ -156,6 +173,9 @@ class AppComponent {
             this.changeDetectorRef.detectChanges();
         }
     }
+    /*
+    *　ログイン
+    */
     onLogin() {
         this.auth.login(this.username, this.password, (error, result) => {
             if (!error) {
@@ -168,6 +188,9 @@ class AppComponent {
             this.changeDetectorRef.detectChanges();
         });
     }
+    /*
+    *　ログアウト
+    */
     onLogout() {
         this.auth.logout((error, result) => {
             if (!error) {
@@ -180,6 +203,9 @@ class AppComponent {
             this.changeDetectorRef.detectChanges();
         });
     }
+    /*
+    *　ユーザ登録
+    */
     onRegister() {
         this.auth.register(this.username, this.password, {}, (error, result) => {
             if (!error) {
