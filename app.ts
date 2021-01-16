@@ -6,7 +6,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 // const logger = require('morgan');
 
-// const indexRouter = require('./routes/index');
+const tweetsRouter = require('./routes/tweets');
 // const usersRouter = require('./routes/users');
 
 const app = express();
@@ -21,13 +21,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', indexRouter);
+app.use('/tweets', tweetsRouter);
 // app.use('/users', usersRouter);
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
-
-
 
 /*
 	Mongoose
@@ -91,7 +89,7 @@ MONGOOSE_MODULE.connection.once("open", () => {
 
 	const PASSPORT_MODULE = require('passport');									// Passport 認証用モジュール
 	const LOCAL_STRATEGY_PLUGIN = require('passport-local').Strategy;				// パスワード認証用Passportプラグイン
-	const LocalAccount = require("./model/account");								// Mongooseアカウント定義
+	const LocalAccount = require("./models/account");								// Mongooseアカウント定義
 
 	PASSPORT_MODULE.serializeUser((user: any, done: any) => { done(null, user) });
 	PASSPORT_MODULE.deserializeUser((user: any, done: any) => { done(null, user) });
@@ -119,23 +117,27 @@ MONGOOSE_MODULE.connection.once("open", () => {
 
 	// ログイン
 	app.post('/login', (req: any, res: any) => {
-		PASSPORT_MODULE.authenticate("local", (error: any, account: any) => {
-			if (!error) {
-				if (account) {
-					req.login(account, (error: any) => {
-						if (!error) {
-							res.json({status:0, value: req.user, message:"OK"});
-						} else {
-							res.json({status:-1, value: {}, message:error.message});
-						}
-					});
+		if (!req.user) {
+			PASSPORT_MODULE.authenticate("local", (error: any, account: any) => {
+				if (!error) {
+					if (account) {
+						req.login(account, (error: any) => {
+							if (!error) {
+								res.json({status: 0, value: req.user, message: "OK"});
+							} else {
+								res.json({status: -1, value: {}, message: error.message});
+							}
+						});
+					} else {
+						res.json({status: -2, message: "user found or password missmatch."});
+					}
 				} else {
-					res.json({status:-2, message:"user found or password missmatch."});
+					res.json({status: -1, message: error.message});
 				}
-			} else {
-				res.json({status:-1, message:error.message});
-			}
-		})(req, res);
+			})(req, res);
+		} else {
+			res.json({status: -2, message: "already.."});
+		}
 	});
 
 	// ログアウト

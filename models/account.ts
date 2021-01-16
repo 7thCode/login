@@ -1,9 +1,11 @@
 "use strict";
 
-const mongoose = require("mongoose");
-const passport = require("passport-local-mongoose");
+namespace AccountModel {
+	
+const mongoose: any = require("mongoose");
+const passport: any = require("passport-local-mongoose");
 
-const Schema = mongoose.Schema;
+const Schema: any = mongoose.Schema;
 
 const Account = new Schema({
 	username: { type: String, required: true, index: { unique: true } },
@@ -14,3 +16,4 @@ Account.plugin(passport);　// register(), authenticate()メソッドが追加�
 
 module.exports = mongoose.model("Account", Account);
 
+}
