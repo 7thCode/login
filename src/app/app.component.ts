@@ -15,6 +15,9 @@ import {AuthService} from './app.service';
 */
 export class AppComponent implements OnInit {
 
+	public tweetText: string;
+	public tweets: any[];
+
 	// バインド対象
 	public user: any;			// ログインユーザ
 	public message: string;		// メッセージ
@@ -36,6 +39,7 @@ export class AppComponent implements OnInit {
 	*/
 	public ngOnInit(): void {
 		this.isLogin();
+		this.onDraw();
 	}
 
 	/*
@@ -92,6 +96,32 @@ export class AppComponent implements OnInit {
 		this.auth.register(this.username, this.password, {},(error: any, result: any): void => {
 			if (!error) {
 				this.message = 'OK';
+			} else {
+				this.message = error.message;
+			}
+		});
+	}
+
+	/*
+	*　Tweet
+	*/
+	public onTweet(): void {
+		this.auth.tweet({text:this.tweetText},(error: any, result: any): void => {
+			if (!error) {
+				this.onDraw();
+			} else {
+				this.message = error.message;
+			}
+		});
+	}
+
+	/*
+	*　Draw
+	*/
+	public onDraw(): void {
+		this.auth.tweets((error: any, tweets: any): void => {
+			if (!error) {
+				this.tweets = tweets.value;
 			} else {
 				this.message = error.message;
 			}

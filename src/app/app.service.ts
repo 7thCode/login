@@ -95,4 +95,36 @@ export class AuthService {
 		});
 	}
 
+	public tweet(content: any, callback: any): void {
+		this.http.post( '/tweets', content, this.httpOptions).pipe(retry(3)).subscribe((result: any): void => {
+			if (result) {
+				if (result.status === 0) {
+					callback(null, result.value);
+				} else {
+					callback(result, null);
+				}
+			} else {
+				callback(this.networkError, null);
+			}
+		}, (error: HttpErrorResponse): void => {
+			callback({code: -1, message: error.message}, null);
+		});
+	}
+
+	public tweets(callback: any): void {
+		this.http.get( '/tweets/query/{}/{}', this.httpOptions).pipe(retry(3)).subscribe((result: any): void => {
+			if (result) {
+				if (result.status === 0) {
+					callback(null, result);
+				} else {
+					callback(null, null);
+				}
+			} else {
+				callback(this.networkError, null);
+			}
+		}, (error: HttpErrorResponse): void => {
+			callback({code: -1, message: error.message}, null);
+		});
+	}
+
 }

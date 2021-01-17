@@ -19,7 +19,16 @@
 	<div *ngIf="user">
 		<div style="margin:8px">logged in.</div>
 		<div style="margin:8px">
+			<input type="text" [(ngModel)]="tweetText">
+			<button (click)="onTweet()">Tweet</button>
+		</div>
+		<div style="margin:8px">
 			<button (click)="onLogout()">Logout</button>
+		</div>
+
+		<div *ngFor="let tweet of tweets">
+			<div>{{tweet.content.username}}</div>
+			<div>{{tweet.content.text}}</div>
 		</div>
 	</div>
 

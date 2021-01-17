@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/tweets', tweetsRouter);
+
 // app.use('/users', usersRouter);
 
 const bodyParser = require('body-parser');
@@ -205,6 +205,8 @@ MONGOOSE_MODULE.connection.once("open", () => {
 		res.send(req.file.originalname + ' upload success');
 	})
 
+	app.use('/tweets', tweetsRouter);
+
 	// --------------------ここまで-------------------- //
 
 	// エラー
@@ -218,6 +220,8 @@ MONGOOSE_MODULE.connection.once("open", () => {
 		res.status(err.status || 500);
 		res.render('error');
 	});
+
+
 
 	// --------------------ここまで--------------------
 
