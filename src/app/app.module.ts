@@ -4,17 +4,16 @@ import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 
-import {AppComponent} from './app.component';
-
 import {AppRoutingModule} from './app-routing.module';
+import { TweetModule } from './tweet/tweet.module';
+
 import { AuthService } from './app.service';
-import { TweetService } from './tweet/tweet.service';
-import { TweetComponent } from './tweet/tweet.component';
+
+import {AppComponent} from './app.component';
 
 @NgModule({
 	declarations: [
-		AppComponent,
-		TweetComponent
+		AppComponent
 	],
 	imports: [
 		BrowserModule,
@@ -23,9 +22,11 @@ import { TweetComponent } from './tweet/tweet.component';
 		HttpClientModule,
 		FormsModule,
 
+		TweetModule,
+
 		AppRoutingModule,
 	],
-	providers: [AuthService,TweetService],
+	providers: [AuthService],
 	bootstrap: [AppComponent]
 })
 export class AppModule {
