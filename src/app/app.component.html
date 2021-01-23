@@ -1,35 +1,53 @@
-<div>
+<div class="title-bar">Twwwwittttter!</div>
+<div class="content">
 
 	<div *ngIf="!user">
-		<div style="margin:8px">
+
+		<div class="row">
 			username:<input type="text" [(ngModel)]="username">
 		</div>
-		<div style="margin:8px">
+		<div class="row">
 			password:<input type="password" [(ngModel)]="password">
 		</div>
-		<div style="margin:8px">
+		<div class="row">
 			<button (click)="onLogin()">Login</button>
 		</div>
-		<div style="margin:8px">
+		<div class="row">
 			<button (click)="onRegister()">Regist</button>
 		</div>
-		<div style="margin:8px">{{message}}</div>
+		<div class="row">{{message}}</div>
+
 	</div>
 
 	<div *ngIf="user">
-		<div style="margin:8px">logged in.</div>
-		<div style="margin:8px">
-			<input type="text" [(ngModel)]="tweetText">
-			<button (click)="onTweet()">Tweet</button>
+
+		<div class="row">
+			<table>
+				<thead>
+				<tr>
+					<th colspan="2">Tweets</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr *ngFor="let tweet of tweets">
+					<td style="width: fit-content;">{{tweet.content.username}}</td>
+					<td>{{tweet.content.text}}</td>
+				</tr>
+				</tbody>
+			</table>
 		</div>
+
+		<div class="row">
+			<textarea [(ngModel)]="tweetText"></textarea>
+		</div>
+		<div class="row">
+			<button (click)="onTweet()">Tweet!</button>
+		</div>
+
 		<div style="margin:8px">
 			<button (click)="onLogout()">Logout</button>
 		</div>
 
-		<div *ngFor="let tweet of tweets">
-			<div>{{tweet.content.username}}</div>
-			<div>{{tweet.content.text}}</div>
-		</div>
 	</div>
 
 </div>

@@ -6,9 +6,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 // const logger = require('morgan');
 
-const tweetsRouter = require('./routes/tweets');
-// const usersRouter = require('./routes/users');
-
 const app = express();
 
 // view engine setup
@@ -20,9 +17,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-
-// app.use('/users', usersRouter);
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -70,7 +64,6 @@ MONGOOSE_MODULE.connection.once("open", () => {
 	}));
 
 	// --------------------ここまで-------------------- //
-
 
 
 	/*
@@ -205,7 +198,11 @@ MONGOOSE_MODULE.connection.once("open", () => {
 		res.send(req.file.originalname + ' upload success');
 	})
 
+	const tweetsRouter = require('./routes/tweets');
+//  const usersRouter = require('./routes/users');
+
 	app.use('/tweets', tweetsRouter);
+//  app.use('/users', usersRouter);
 
 	// --------------------ここまで-------------------- //
 
@@ -220,8 +217,6 @@ MONGOOSE_MODULE.connection.once("open", () => {
 		res.status(err.status || 500);
 		res.render('error');
 	});
-
-
 
 	// --------------------ここまで--------------------
 
