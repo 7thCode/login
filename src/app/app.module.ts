@@ -8,11 +8,13 @@ import {AppComponent} from './app.component';
 
 import {AppRoutingModule} from './app-routing.module';
 import { AuthService } from './app.service';
-import { TweetService } from './tweet.service';
+import { TweetService } from './tweet/tweet.service';
+import { TweetComponent } from './tweet/tweet.component';
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
+		TweetComponent
 	],
 	imports: [
 		BrowserModule,

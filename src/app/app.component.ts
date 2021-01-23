@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {AuthService} from './app.service';
-import {TweetService} from './tweet.service';
+import {TweetService} from './tweet/tweet.service';
 
 /*
 * コンポーネント定義
@@ -23,8 +23,7 @@ export class AppComponent implements OnInit {
 	* */
 	constructor(
 		public changeDetectorRef: ChangeDetectorRef,
-		public auth: AuthService,
-		public tweet: TweetService) {
+		public auth: AuthService) {
 	}
 
 	/*
@@ -33,7 +32,6 @@ export class AppComponent implements OnInit {
 	*/
 	public ngOnInit(): void {
 		this.isLogin();
-		this.onDraw();
 	}
 
 	/*
@@ -96,30 +94,6 @@ export class AppComponent implements OnInit {
 		});
 	}
 
-	/*
-	*　Tweet
-	*/
-	public onTweet(): void {
-		this.tweet.tweet({text:this.tweetText},(error: any, result: any): void => {
-			if (!error) {
-				this.onDraw();
-			} else {
-				this.message = error.message;
-			}
-		});
-	}
 
-	/*
-	*　Draw
-	*/
-	public onDraw(): void {
-		this.tweet.tweets((error: any, tweets: any): void => {
-			if (!error) {
-				this.tweets = tweets.value;
-			} else {
-				this.message = error.message;
-			}
-		});
-	}
 
 }

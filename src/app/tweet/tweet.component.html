@@ -1,0 +1,24 @@
+<div class="row">
+	<table>
+		<thead>
+		<tr>
+			<th colspan="2">Tweets</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr *ngFor="let tweet of tweets">
+			<td style="width: fit-content;">{{tweet.content.username}}</td>
+			<td>{{tweet.content.text}}</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="row">
+	<textarea [(ngModel)]="tweetText"></textarea>
+</div>
+<div class="row">
+	<button (click)="onTweet()">Tweet!</button>
+</div>
+
+
