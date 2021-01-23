@@ -1,18 +1,11 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {AuthService} from './app.service';
+import {TweetService} from './tweet.service';
 
 /*
 * コンポーネント定義
 */
-@Component({
-	selector: 'app-root',
-	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.css']
-})
-
-/*
-*　クラス定義
-*/
+@Component({selector: 'app-root',templateUrl: './app.component.html',styleUrls: ['./app.component.css']})
 export class AppComponent implements OnInit {
 
 	public tweetText: string;
@@ -30,7 +23,8 @@ export class AppComponent implements OnInit {
 	* */
 	constructor(
 		public changeDetectorRef: ChangeDetectorRef,
-		public auth: AuthService) {
+		public auth: AuthService,
+		public tweet: TweetService) {
 	}
 
 	/*
@@ -106,7 +100,7 @@ export class AppComponent implements OnInit {
 	*　Tweet
 	*/
 	public onTweet(): void {
-		this.auth.tweet({text:this.tweetText},(error: any, result: any): void => {
+		this.tweet.tweet({text:this.tweetText},(error: any, result: any): void => {
 			if (!error) {
 				this.onDraw();
 			} else {
@@ -119,7 +113,7 @@ export class AppComponent implements OnInit {
 	*　Draw
 	*/
 	public onDraw(): void {
-		this.auth.tweets((error: any, tweets: any): void => {
+		this.tweet.tweets((error: any, tweets: any): void => {
 			if (!error) {
 				this.tweets = tweets.value;
 			} else {
