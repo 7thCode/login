@@ -1,32 +1,49 @@
-<div class="title-bar">Twwwwittttter!</div>
-<div class="content">
-
-	<div *ngIf="!user">
-
-		<div class="row">
-			username:<input type="text" [(ngModel)]="username">
-		</div>
-		<div class="row">
-			password:<input type="password" [(ngModel)]="password">
-		</div>
-		<div class="row">
-			<button (click)="onLogin()">Login</button>
-		</div>
-		<div class="row">
-			<button (click)="onRegister()">Regist</button>
-		</div>
-		<div class="row">{{message}}</div>
-
-	</div>
-
+<mat-toolbar color="primary">
+	<button mat-icon-button class="" aria-label="">
+		<mat-icon>menu</mat-icon>
+	</button>
+	<span>Twwwiiiite!</span>
+	<span class="spacer"></span>
 	<div *ngIf="user">
-
-		<app-tweet></app-tweet>
-
-		<div style="margin:8px">
-			<button (click)="onLogout()">Logout</button>
-		</div>
-
+		<button mat-raised-button color="accent" (click)="onLogout()">Logout</button>
 	</div>
+</mat-toolbar>
 
+<div *ngIf="!user" fxLayout="row" fxLayoutAlign="center center" class="container-with-header">
+	<mat-card fxFlex="30%">
+		<mat-card-header>
+			<mat-card-title>Login</mat-card-title>
+		</mat-card-header>
+		<mat-card-content fxLayout="column">
+			<form #form="ngForm" fxLayout="column" novalidate>
+				<mat-form-field>
+					<mat-label>username...</mat-label>
+					<input matInput autocomplete="off" type="text" placeholder="user@name" [(ngModel)]="username" #username_field="ngModel" name="username_field" required minlength="3" maxlength="255">
+					<mat-error *ngIf="username_field.errors?.required;">入力してください</mat-error>
+					<mat-error *ngIf="username_field.errors?.maxlength">長すぎます</mat-error>
+					<mat-error *ngIf="username_field.errors?.minlength">短すぎます</mat-error>
+				</mat-form-field>
+				<mat-form-field>
+					<mat-label>password...</mat-label>
+					<input matInput autocomplete="off" type="password" placeholder="password..." [(ngModel)]="password" #password_field="ngModel" name="password_field" required minlength="3" maxlength="255">
+					<mat-error *ngIf="password_field.errors?.required;">入力してください</mat-error>
+					<mat-error *ngIf="password_field.errors?.maxlength">長すぎます</mat-error>
+					<mat-error *ngIf="password_field.errors?.minlength">短すぎます</mat-error>
+				</mat-form-field>
+			</form>
+
+			<button mat-raised-button color="primary" style="margin:12px;" [disabled]="form.invalid" (click)="onLogin()">Login</button>
+
+			<button mat-raised-button color="accent" style="margin:12px;" (click)="onRegister()">Regist</button>
+
+			<div fxLayout="row" fxLayoutAlign="center">
+				<div>{{message}}</div>
+			</div>
+		</mat-card-content>
+	</mat-card>
 </div>
+
+<div *ngIf="user" fxLayout="row" fxLayoutAlign="center center" class="container-with-header">
+	<app-tweet fxFlex="80%"></app-tweet>
+</div>
+

@@ -7,15 +7,18 @@
     "build": "ng build && gulp",
     "test": "ng test",
     "lint": "ng lint",
-	"e2e": "ng e2e"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "~10.0.4",
+    "@angular/cdk": "^10.2.7",
     "@angular/common": "~10.0.4",
     "@angular/compiler": "~10.0.4",
     "@angular/core": "~10.0.4",
+    "@angular/flex-layout": "^11.0.0-beta.33",
     "@angular/forms": "~10.0.4",
+    "@angular/material": "^10.2.7",
     "@angular/platform-browser": "~10.0.4",
     "@angular/platform-browser-dynamic": "~10.0.4",
     "@angular/router": "~10.0.4",

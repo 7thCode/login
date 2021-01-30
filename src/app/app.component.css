@@ -1,6 +1,9 @@
-.content {
-	margin: 12px;
+.container-with-header {
+	width: 100%;
+	height: calc(100% - 64px);
+	background-color: #e0e0e0;
 }
+
 
 .row {
 	margin: 8px;
@@ -17,29 +20,6 @@ thead {
 	color: #303030;
 }
 
-button {
-	background-color: #c9c9ca;
-	color: #cefbf7;
-	padding: 12px;
-	margin: 8px;
-	border-radius: 8px;
-	border-color: #e0e0e0;
-	font-size: 16px;
-	font-weight: 700;
-	text-shadow: -1px -1px #a5a5a5;
-}
-
-textarea {
-	width:100%;
-	border: 1px solid #bfbfbf;
-}
-
-.title-bar {
-	background-color: #404040;
-	color: #e6e5e5;
-	font-size: 24px;
-	padding: 12px;
-	font-weight: 900;
-	box-shadow: 0 4px 2px #202020;
-	text-shadow: 4px 4px #202020;
+.spacer {
+	flex: 1 1 auto;
 }
