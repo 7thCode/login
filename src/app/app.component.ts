@@ -5,7 +5,12 @@ import {TweetService} from './tweet/tweet.service';
 /*
 * コンポーネント定義
 */
-@Component({selector: 'app-root',templateUrl: './app.component.html',styleUrls: ['./app.component.css']})
+@Component({
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.css']
+})
+
 export class AppComponent implements OnInit {
 
 	public tweetText: string;
@@ -14,7 +19,7 @@ export class AppComponent implements OnInit {
 	// バインド対象
 	public user: any;			// ログインユーザ
 	public message: string;		// メッセージ
-	public username: string;	// ユーザ名
+	public user_name: string;	// ユーザ名
 	public password: string;	// パスワード
 
 	/*
@@ -55,7 +60,7 @@ export class AppComponent implements OnInit {
 	*　ログイン
 	*/
 	public onLogin(): void {
-		this.auth.login(this.username, this.password, (error: any, result: any): void => {
+		this.auth.login(this.user_name, this.password, (error: any, result: any): void => {
 			if (!error) {
 				this.user = result;
 				this.message = '';
@@ -85,7 +90,7 @@ export class AppComponent implements OnInit {
 	*　ユーザ登録
 	*/
 	public onRegister(): void {
-		this.auth.register(this.username, this.password, {},(error: any, result: any): void => {
+		this.auth.register(this.user_name, this.password, {},(error: any, result: any): void => {
 			if (!error) {
 				this.message = 'OK';
 			} else {

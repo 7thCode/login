@@ -2,7 +2,7 @@
 	<button mat-icon-button class="" aria-label="">
 		<mat-icon>menu</mat-icon>
 	</button>
-	<span>Twwwiiiite!</span>
+	<span>ClubHouse</span>
 	<span class="spacer"></span>
 	<div *ngIf="user">
 		<button mat-raised-button color="accent" (click)="onLogout()">Logout</button>
@@ -10,18 +10,19 @@
 </mat-toolbar>
 
 <div *ngIf="!user" fxLayout="row" fxLayoutAlign="center center" class="container-with-header">
-	<mat-card fxFlex="30%">
+	<mat-card fxFlex="45%">
 		<mat-card-header>
-			<mat-card-title>Login</mat-card-title>
+			<mat-card-title>ログイン</mat-card-title>
+			<mat-card-subtitle>ようこそClubへ</mat-card-subtitle>
 		</mat-card-header>
 		<mat-card-content fxLayout="column">
 			<form #form="ngForm" fxLayout="column" novalidate>
 				<mat-form-field>
-					<mat-label>username...</mat-label>
-					<input matInput autocomplete="off" type="text" placeholder="user@name" [(ngModel)]="username" #username_field="ngModel" name="username_field" required minlength="3" maxlength="255">
-					<mat-error *ngIf="username_field.errors?.required;">入力してください</mat-error>
-					<mat-error *ngIf="username_field.errors?.maxlength">長すぎます</mat-error>
-					<mat-error *ngIf="username_field.errors?.minlength">短すぎます</mat-error>
+					<mat-label>username.</mat-label>
+					<input matInput autocomplete="off" type="text" placeholder="user@name" [(ngModel)]="user_name" #usernamefield="ngModel" name="usernamefield" required minlength="2" maxlength="128">
+					<mat-error *ngIf="usernamefield.errors?.required;">入力してください.</mat-error>
+					<mat-error *ngIf="usernamefield.errors?.maxlength">長すぎます.</mat-error>
+					<mat-error *ngIf="usernamefield.errors?.minlength">短すぎます.</mat-error>
 				</mat-form-field>
 				<mat-form-field>
 					<mat-label>password...</mat-label>
