@@ -19,10 +19,10 @@
 			<form #form="ngForm" fxLayout="column" novalidate>
 				<mat-form-field>
 					<mat-label>username.</mat-label>
-					<input matInput autocomplete="off" type="text" placeholder="user@name" [(ngModel)]="user_name" #usernamefield="ngModel" name="usernamefield" required minlength="2" maxlength="128">
-					<mat-error *ngIf="usernamefield.errors?.required;">入力してください.</mat-error>
-					<mat-error *ngIf="usernamefield.errors?.maxlength">長すぎます.</mat-error>
-					<mat-error *ngIf="usernamefield.errors?.minlength">短すぎます.</mat-error>
+					<input matInput autocomplete="off" type="text" placeholder="user@name" [(ngModel)]="user_name" #username_field="ngModel" name="username_field" required minlength="2" maxlength="128">
+					<mat-error *ngIf="username_field.errors?.required;">入力してください.</mat-error>
+					<mat-error *ngIf="username_field.errors?.maxlength">長すぎます.</mat-error>
+					<mat-error *ngIf="username_field.errors?.minlength">短すぎます.</mat-error>
 				</mat-form-field>
 				<mat-form-field>
 					<mat-label>password...</mat-label>
