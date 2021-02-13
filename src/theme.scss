@@ -3,10 +3,10 @@
 @include mat-core();
 
 // Available color palettes: https://material.io/design/color/
-$candy-app-primary: mat-palette($mat-teal);
-$candy-app-accent: mat-palette($mat-deep-orange, A200, A100, A400);
-$candy-app-warn: mat-palette($mat-red);
+$login-app-primary: mat-palette($mat-teal);
+$login-app-accent: mat-palette($mat-deep-orange, A200, A100, A400);
+$login-app-warn: mat-palette($mat-red);
 
-$candy-app-theme: mat-dark-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
-@include angular-material-theme($candy-app-theme);
+$login-app-theme: mat-dark-theme($login-app-primary, $login-app-accent, $login-app-warn);
+@include angular-material-theme($login-app-theme);
 
