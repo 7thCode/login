@@ -1,24 +1,27 @@
-<mat-card style="height: 80vh;">
-	<mat-card-header>
-		<mat-card-title>Tweet...</mat-card-title>
-	</mat-card-header>
-	<mat-card-content style="height: 100%;">
-		<mat-list style="height: 70%;overflow: scroll;">
-			<mat-list-item *ngFor="let tweet of tweets" fxLayout="row">
-				<div mat-line>{{tweet.content.username}}</div>
-				<div mat-line>{{tweet.content.text}}</div>
-			</mat-list-item>
-		</mat-list>
-		<form #form="ngForm" fxLayout="column" novalidate>
-			<mat-form-field>
-				<mat-label>tweet...</mat-label>
-				<textarea matInput autocomplete="off" [(ngModel)]="tweetText" #tweet_text_field="ngModel" name="tweet_text_field" required maxlength="255"></textarea>
-				<mat-error *ngIf="tweet_text_field.errors?.maxlength">長すぎます</mat-error>
-			</mat-form-field>
-			<div fxLayout="row">
-				<button mat-raised-button color="primary" style="margin:12px;" [disabled]="form.invalid" (click)="onTweet()">onTweet</button>
-			</div>
-		</form>
-	</mat-card-content>
-</mat-card>
+<ng-container>
+	<mat-card style="height: 80vh;">
+		<mat-card-header>
+			<mat-card-title>Tweet...</mat-card-title>
+			<app-hoge></app-hoge>
+		</mat-card-header>
+		<mat-card-content style="height: 100%;">
+			<mat-list style="height: 70%;overflow: scroll;">
+				<mat-list-item *ngFor="let tweet of tweets" fxLayout="row">
+					<div mat-line>{{tweet.content.username}}</div>
+					<div mat-line>{{tweet.content.text}}</div>
+				</mat-list-item>
+			</mat-list>
+			<form #form="ngForm" fxLayout="column" novalidate>
+				<mat-form-field>
+					<mat-label>tweet...</mat-label>
+					<textarea matInput autocomplete="off" [(ngModel)]="tweetText" #tweet_text_field="ngModel" name="tweet_text_field" required maxlength="255"></textarea>
+					<mat-error *ngIf="tweet_text_field.errors?.maxlength">長すぎます</mat-error>
+				</mat-form-field>
+				<div fxLayout="row">
+					<button mat-raised-button color="primary" style="margin:12px;" [disabled]="form.invalid" (click)="onTweet()">onTweet</button>
+				</div>
+			</form>
+		</mat-card-content>
+	</mat-card>
+</ng-container>
 

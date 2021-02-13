@@ -6,13 +6,18 @@ import { TweetService } from './tweet.service';
   templateUrl: './tweet.component.html',
   styleUrls: ['./tweet.component.css']
 })
+
 export class TweetComponent implements OnInit {
 
 	public tweetText: string;
 	public tweets: any[];
 	public message: string;		// メッセージ
 
-  	constructor(public tweet: TweetService) { }
+  	constructor(public tweet: TweetService) {
+
+	}
+
+
 
   	public ngOnInit(): void {
 		this.onDraw();

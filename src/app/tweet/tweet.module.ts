@@ -1,28 +1,26 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {HttpClientModule} from '@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
+
+import {FlexLayoutModule} from '@angular/flex-layout';
+
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
-import {FlexLayoutModule} from "@angular/flex-layout";
-
-
-import { TweetComponent } from './tweet.component';
-import { TweetService } from './tweet.service';
-import {BrowserModule} from '@angular/platform-browser';
-import {AppRoutingModule} from '../app-routing.module';
-import {HttpClientModule} from '@angular/common/http';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 
+import {HogeModule} from '../hoge/hoge.module';
+import {TweetService} from './tweet.service';
+
+import {TweetComponent} from './tweet.component';
 
 @NgModule({
 	declarations: [
-		TweetComponent
+		TweetComponent,
 	],
 	imports: [
 		CommonModule,
@@ -38,6 +36,7 @@ import {MatIconModule} from '@angular/material/icon';
 		MatButtonModule,
 		MatIconModule,
 
+		HogeModule
 	],
 	exports: [
 		TweetComponent
@@ -47,4 +46,5 @@ import {MatIconModule} from '@angular/material/icon';
 	]
 })
 
-export class TweetModule { }
+export class TweetModule {
+}
