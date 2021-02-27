@@ -13,7 +13,7 @@ router.get('/query/:query/:option', [
 			const option_string = request.params.option;
 			const option_object = JSON.parse(option_string);
 
-			Tweet.find(query_object, option_object).limit(10).then((tweets: any[]) => {
+			Tweet.find(query_object, option_object).then((tweets: any[]) => {
 				response.json({status: 0, value: tweets, message: 'OK'});
 			});
 		} catch (e) {
@@ -29,6 +29,7 @@ router.get('/count/:query', [
 router.post('/', [
 	(request: any, response: any): void => {
 		const tweet: any = new Tweet();
+		tweet.create = new Date();
 		tweet.content.text = request.body.text;
 		tweet.content.username = request.user.username;
 		tweet.save((error: any, result: any) => {

@@ -7,6 +7,7 @@ const mongoose: any = require("mongoose");
 const Schema: any = mongoose.Schema;
 
 const Tweet = new Schema({
+	create: {type: Date},
 	user_id: {type: Schema.Types.ObjectId},
 	content: {type: mongoose.Schema.Types.Mixed, default: {username:"",text:""}},
 });
