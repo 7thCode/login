@@ -47,8 +47,11 @@ export class TweetService {
 		});
 	}
 
-	public tweets(callback: any): void {
-		this.http.get( '/tweets/query/{}/{}', this.httpOptions).pipe(retry(3)).subscribe((result: any): void => {
+	public tweets(option:any, callback: any): void {
+
+		const option_string: string = JSON.stringify(option);
+
+		this.http.get( '/tweets/query/{}/' + option_string, this.httpOptions).pipe(retry(3)).subscribe((result: any): void => {
 			if (result) {
 				if (result.status === 0) {
 					callback(null, result);

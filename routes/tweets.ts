@@ -8,12 +8,12 @@ const Tweet: any = require('../models/tweet');
 router.get('/query/:query/:option', [
 	(request: any, response: any): void => {
 		try {
-			const query_string = request.params.query;
+			const query_string: string = request.params.query;
 			const query_object = JSON.parse(query_string);
-			const option_string = request.params.option;
+			const option_string: string = request.params.option;
 			const option_object = JSON.parse(option_string);
 
-			Tweet.find(query_object, option_object).then((tweets: any[]) => {
+			Tweet.find(query_object,{}, option_object).then((tweets: any[]) => {
 				response.json({status: 0, value: tweets, message: 'OK'});
 			});
 		} catch (e) {
