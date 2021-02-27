@@ -7,9 +7,18 @@ const Tweet: any = require('../models/tweet');
 
 router.get('/query/:query/:option', [
 	(request: any, response: any): void => {
-		Tweet.find({}).then((tweets: any[]) => {
-			response.json({status: 0, value: tweets, message: 'OK'});
-		});
+		try {
+			const query_string = request.params.query;
+			const query_object = JSON.parse(query_string);
+			const option_string = request.params.option;
+			const option_object = JSON.parse(option_string);
+
+			Tweet.find(query_object, option_object).limit(10).then((tweets: any[]) => {
+				response.json({status: 0, value: tweets, message: 'OK'});
+			});
+		} catch (e) {
+			response.json({status: e.code, value: [], message: e.message});
+		}
 	}]);
 
 router.get('/count/:query', [

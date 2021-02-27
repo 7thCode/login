@@ -17,8 +17,6 @@ export class TweetComponent implements OnInit {
 
 	}
 
-
-
   	public ngOnInit(): void {
 		this.onDraw();
   	}
