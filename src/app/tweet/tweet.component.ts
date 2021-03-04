@@ -7,6 +7,9 @@ import { TweetService } from './tweet.service';
   styleUrls: ['./tweet.component.css']
 })
 
+// user1 -> user2
+// user3...
+
 export class TweetComponent implements OnInit {
 
 	public tweetText: string;
@@ -48,14 +51,24 @@ export class TweetComponent implements OnInit {
 	}
 
 	/*
-*　Draw
-*/
+	*　Sort
+	*/
 	public Ascend(): void {
 		this.onDraw(-1);
 	}
 
 	public Descend(): void {
 		this.onDraw(1);
+	}
+
+	public Relation(): void {
+		this.tweet.relation({to: "user3",type: "friend"}, (error: any, tweets: any): void => {
+			if (!error) {
+				this.tweets = tweets.value;
+			} else {
+				this.message = error.message;
+			}
+		});
 	}
 
 }

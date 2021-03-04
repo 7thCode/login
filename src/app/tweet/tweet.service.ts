@@ -66,4 +66,20 @@ export class TweetService {
 		});
 	}
 
+	public relation(content: {to: string,type: string}, callback: any): void {
+		this.http.post( '/tweets/relation', content, this.httpOptions).pipe(retry(3)).subscribe((result: any): void => {
+			if (result) {
+				if (result.status === 0) {
+					callback(null, result.value);
+				} else {
+					callback(result, null);
+				}
+			} else {
+				callback(this.networkError, null);
+			}
+		}, (error: HttpErrorResponse): void => {
+			callback({code: -1, message: error.message}, null);
+		});
+	}
+
 }
