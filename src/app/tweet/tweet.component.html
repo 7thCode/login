@@ -1,31 +1,66 @@
 <ng-container>
-	<mat-card style="height: 80vh;">
+	<mat-card>
 		<mat-card-header>
 			<mat-card-title>Tweet...</mat-card-title>
 			<app-hoge></app-hoge>
 		</mat-card-header>
-		<mat-card-content style="height: 100%;">
-			<mat-list style="height: 70%;overflow: scroll;">
-				<mat-list-item *ngFor="let tweet of tweets" fxLayout="row">
-					<div mat-line>{{tweet.content.username}}</div>
-					<div mat-line>{{tweet.content.text}}</div>
-				</mat-list-item>
-			</mat-list>
-			<form #form="ngForm" fxLayout="column" novalidate>
+		<mat-card-content fxLayout="column">
+			<div fxLayout="row" fxFlex="80">
+				<mat-card fxFlex="50">
+					<mat-card-header>
+						<mat-card-title>From...</mat-card-title>
+					</mat-card-header>
+					<mat-card-content>
+						<mat-list style="max-height:400px;overflow: scroll;">
+							<mat-list-item *ngFor="let tweet of friend_tweets" fxLayout="row">
+								<div mat-line>{{tweet.content.username}}</div>
+								<div mat-line>{{tweet.content.text}}</div>
+							</mat-list-item>
+						</mat-list>
+					</mat-card-content>
+				</mat-card>
+				<mat-card fxFlex>
+					<mat-card-header>
+						<mat-card-title>Self...</mat-card-title>
+					</mat-card-header>
+					<mat-card-content>
+						<mat-list style="max-height:400px;overflow: scroll;">
+							<mat-list-item *ngFor="let tweet of self_tweets" fxLayout="row">
+								<div mat-line>{{tweet.content.username}}</div>
+								<div mat-line>{{tweet.content.text}}</div>
+							</mat-list-item>
+						</mat-list>
+					</mat-card-content>
+				</mat-card>
+			</div>
+		</mat-card-content>
+		<mat-card-actions fxLayout="column">
+
+			<form #form1="ngForm" fxFlex fxLayout="column" novalidate>
 				<mat-form-field>
 					<mat-label>tweet...</mat-label>
 					<textarea matInput autocomplete="off" [(ngModel)]="tweetText" #tweet_text_field="ngModel" name="tweet_text_field" required maxlength="255"></textarea>
+					<mat-error *ngIf="tweet_text_field.errors?.required;">入力してください</mat-error>
 					<mat-error *ngIf="tweet_text_field.errors?.maxlength">長すぎます</mat-error>
 				</mat-form-field>
 				<div fxLayout="row">
-					<button mat-raised-button color="primary" style="margin:12px;" [disabled]="form.invalid" (click)="onTweet()">onTweet</button>
-					<button mat-raised-button color="primary" style="margin:12px;"  (click)="Ascend()">Ascend</button>
-					<button mat-raised-button color="primary" style="margin:12px;"  (click)="Descend()">Descend</button>
-					<button mat-raised-button color="warn" style="margin:12px;"  (click)="Relation()">Relation</button>
-
+					<button mat-raised-button color="primary" style="margin:12px;" [disabled]="tweet_text_field.errors?.required" (click)="onTweet()">Tweet!</button>
+					<button mat-raised-button color="primary" style="margin:12px;" (click)="Ascend()">↑</button>
+					<button mat-raised-button color="primary" style="margin:12px;" (click)="Descend()">↓</button>
 				</div>
 			</form>
-		</mat-card-content>
+
+			<form #form2="ngForm" fxFlex fxLayout="row" novalidate>
+			<button mat-raised-button color="warn" style="margin:12px;" [disabled]="username_field.errors?.required" (click)="Relation()">友達になろう！</button>
+			<mat-form-field>
+				<mat-label>username...</mat-label>
+				<input matInput type="text" autocomplete="off" [(ngModel)]="username" #username_field="ngModel" name="username_field" required maxlength="10"/>
+				<mat-error *ngIf="username_field.errors?.required">入力してください</mat-error>
+				<mat-error *ngIf="username_field.errors?.maxlength">長すぎます</mat-error>
+			</mat-form-field>
+			</form>
+
+		</mat-card-actions>
 	</mat-card>
 </ng-container>
 

@@ -13,8 +13,10 @@ import { TweetService } from './tweet.service';
 export class TweetComponent implements OnInit {
 
 	public tweetText: string;
-	public tweets: any[];
+	public friend_tweets: any[];
+	public self_tweets: any[];
 	public message: string;		// メッセージ
+	public username: string;
 
   	constructor(public tweet: TweetService) {
 
@@ -41,9 +43,16 @@ export class TweetComponent implements OnInit {
 	*　Draw
 	*/
 	public onDraw(direction: number): void {
-		this.tweet.tweets({sort:{create: direction}}, (error: any, tweets: any): void => {
+		this.tweet.friend_tweets({sort:{create: direction}}, (error: any, friend_tweets: any): void => {
 			if (!error) {
-				this.tweets = tweets.value;
+				this.tweet.self_tweets({sort:{create: direction}}, (error: any, self_tweets: any): void => {
+					if (!error) {
+						this.friend_tweets = friend_tweets.value;
+						this.self_tweets = self_tweets.value;
+					} else {
+						this.message = error.message;
+					}
+				});
 			} else {
 				this.message = error.message;
 			}
@@ -62,9 +71,9 @@ export class TweetComponent implements OnInit {
 	}
 
 	public Relation(): void {
-		this.tweet.relation({to: "user3",type: "friend"}, (error: any, tweets: any): void => {
+		this.tweet.relation({to: this.username,type: "friend"}, (error: any, tweets: any): void => {
 			if (!error) {
-				this.tweets = tweets.value;
+				this.onDraw(-1);
 			} else {
 				this.message = error.message;
 			}
