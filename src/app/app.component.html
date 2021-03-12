@@ -9,42 +9,57 @@
 	</div>
 </mat-toolbar>
 
-<div *ngIf="!user" fxLayout="row" fxLayoutAlign="center center" class="container-with-header">
-	<mat-card fxFlex="45%">
-		<mat-card-header>
-			<mat-card-title>ログイン</mat-card-title>
-			<mat-card-subtitle>ようこそClubへ</mat-card-subtitle>
-		</mat-card-header>
-		<mat-card-content fxLayout="column">
-			<form #form="ngForm" fxLayout="column" novalidate>
-				<mat-form-field>
-					<mat-label>username.</mat-label>
-					<input matInput autocomplete="off" type="text" placeholder="user@name" [(ngModel)]="user_name" #username_field="ngModel" name="username_field" required minlength="2" maxlength="128">
-					<mat-error *ngIf="username_field.errors?.required;">入力してください.</mat-error>
-					<mat-error *ngIf="username_field.errors?.maxlength">長すぎます.</mat-error>
-					<mat-error *ngIf="username_field.errors?.minlength">短すぎます.</mat-error>
-				</mat-form-field>
-				<mat-form-field>
-					<mat-label>password...</mat-label>
-					<input matInput autocomplete="off" type="password" placeholder="password..." [(ngModel)]="password" #password_field="ngModel" name="password_field" required minlength="3" maxlength="255">
-					<mat-error *ngIf="password_field.errors?.required;">入力してください</mat-error>
-					<mat-error *ngIf="password_field.errors?.maxlength">長すぎます</mat-error>
-					<mat-error *ngIf="password_field.errors?.minlength">短すぎます</mat-error>
-				</mat-form-field>
-			</form>
+<mat-drawer-container class="example-container" autosize>
+	<mat-drawer #drawer class="example-sidenav" mode="side" opened>
+		<div fxLayout="column" fxLayoutAlign="start center" style="margin:8px;">
+			<a routerLink="tweet" style="color:#fdfdfd;margin:4px;">Tweet</a>
+			<a routerLink="chart" style="color:#fdfdfd;margin:4px;">Chart</a>
+		</div>
+	</mat-drawer>
 
-			<button mat-raised-button color="primary" style="margin:12px;" [disabled]="form.invalid" (click)="onLogin()">Login</button>
+	<div class="example-sidenav-content">
+		<div *ngIf="!user" fxLayout="row" fxLayoutAlign="center center" class="container-with-header">
+			<mat-card fxFlex="45%">
+				<mat-card-header>
+					<mat-card-title>ログイン</mat-card-title>
+					<mat-card-subtitle>ようこそClubへ</mat-card-subtitle>
+				</mat-card-header>
+				<mat-card-content fxLayout="column">
+					<form #form="ngForm" fxLayout="column" novalidate>
+						<mat-form-field>
+							<mat-label>username.</mat-label>
+							<input matInput autocomplete="off" type="text" placeholder="user@name" [(ngModel)]="user_name" #username_field="ngModel" name="username_field" required minlength="2" maxlength="128">
+							<mat-error *ngIf="username_field.errors?.required;">入力してください.</mat-error>
+							<mat-error *ngIf="username_field.errors?.maxlength">長すぎます.</mat-error>
+							<mat-error *ngIf="username_field.errors?.minlength">短すぎます.</mat-error>
+						</mat-form-field>
+						<mat-form-field>
+							<mat-label>password...</mat-label>
+							<input matInput autocomplete="off" type="password" placeholder="password..." [(ngModel)]="password" #password_field="ngModel" name="password_field" required minlength="3" maxlength="255">
+							<mat-error *ngIf="password_field.errors?.required;">入力してください</mat-error>
+							<mat-error *ngIf="password_field.errors?.maxlength">長すぎます</mat-error>
+							<mat-error *ngIf="password_field.errors?.minlength">短すぎます</mat-error>
+						</mat-form-field>
+					</form>
 
-			<button mat-raised-button color="accent" style="margin:12px;" (click)="onRegister()">Regist</button>
+					<button mat-raised-button color="primary" style="margin:12px;" [disabled]="form.invalid" (click)="onLogin()">Login</button>
 
-			<div fxLayout="row" fxLayoutAlign="center">
-				<div>{{message}}</div>
-			</div>
-		</mat-card-content>
-	</mat-card>
-</div>
+					<button mat-raised-button color="accent" style="margin:12px;" (click)="onRegister()">Regist</button>
 
-<div *ngIf="user" fxLayout="row" fxLayoutAlign="center center" class="container-with-header">
-	<app-tweet fxFlex="90%"></app-tweet>
-</div>
+					<div fxLayout="row" fxLayoutAlign="center">
+						<div>{{message}}</div>
+					</div>
+				</mat-card-content>
+			</mat-card>
+		</div>
+
+		<div *ngIf="user" fxLayout="row" fxLayoutAlign="center center" class="container-with-header">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+
+</mat-drawer-container>
+
+
+
 

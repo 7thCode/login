@@ -199,9 +199,11 @@ MONGOOSE_MODULE.connection.once("open", () => {
 	})
 
 	const tweetsRouter = require('./routes/tweets');
+	const quandlRouter = require('./routes/quandl');
 //  const usersRouter = require('./routes/users');
 
 	app.use('/tweets', tweetsRouter);
+	app.use('/quandl', quandlRouter);
 //  app.use('/users', usersRouter);
 
 	// --------------------ここまで-------------------- //

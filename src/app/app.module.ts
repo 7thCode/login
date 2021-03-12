@@ -21,10 +21,14 @@ import {TweetModule} from './tweet/tweet.module';
 import {AuthService} from './app.service';
 
 import {AppComponent} from './app.component';
+import { ChartComponent } from './chart/chart.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {NgxChartsModule} from "@swimlane/ngx-charts";
 
 @NgModule({
 	declarations: [
 		AppComponent,
+		ChartComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -45,7 +49,9 @@ import {AppComponent} from './app.component';
 		MatButtonModule,
 		MatToolbarModule,
 		MatIconModule,
-		MatCardModule
+		MatCardModule,
+		MatSidenavModule,
+		NgxChartsModule
 	],
 	providers: [AuthService],
 	bootstrap: [AppComponent]

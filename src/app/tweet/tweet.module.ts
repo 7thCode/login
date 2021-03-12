@@ -13,7 +13,6 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 
-import {HogeModule} from '../hoge/hoge.module';
 import {TweetService} from './tweet.service';
 
 import {TweetComponent} from './tweet.component';
@@ -35,8 +34,6 @@ import {TweetComponent} from './tweet.component';
 		MatInputModule,
 		MatButtonModule,
 		MatIconModule,
-
-		HogeModule
 	],
 	exports: [
 		TweetComponent
