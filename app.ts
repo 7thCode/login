@@ -28,6 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 	MongoDBのカプセル化。(抽象レイヤ)
 
 */
+const connect_url = "mongodb://localhost/login";					// MongoDB接続先
 
 const MONGOOSE_MODULE = require('mongoose');
 
@@ -47,7 +48,7 @@ MONGOOSE_MODULE.connection.once("open", () => {
 	// app.use(SESSION_MODULE.session);≠
 
 	const SESSION_MODULE = require('express-session');						// Express Session
-	const MONGOSTORE_CLASS = require("connect-mongo")(SESSION_MODULE);		// 暗号化されたクッキーとデータベースに保存されたセッションを関連づける
+	const MONGOSTORE_CLASS = require("connect-mongo");						// 暗号化されたクッキーとデータベースに保存されたセッションを関連づける
 
 	app.use(SESSION_MODULE({												// sessionとMongoDBの接続
 		name: "login",	                                           			// セッション名
@@ -56,10 +57,11 @@ MONGOOSE_MODULE.connection.once("open", () => {
 		rolling: true,		                                       			//
 		saveUninitialized: true,											//
 		cookie: { maxAge: 365 * 24 * 60 * 60 * 1000 },						// クッキー側設定
-		store: new MONGOSTORE_CLASS({										// MongoDB側接続オブジェクト
-			mongooseConnection: MONGOOSE_MODULE.connection,					// Mongoose接続
+		store: MONGOSTORE_CLASS.create({									// MongoDB側接続オブジェクト
+			mongoUrl: connect_url,
+//			mongooseConnection: MONGOOSE_MODULE.connection,					// Mongoose接続
 			ttl: 365 * 24 * 60 * 60,
-			clear_interval: 60 * 60,
+//			clear_interval: 60 * 60,
 		}),
 	}));
 
@@ -200,10 +202,12 @@ MONGOOSE_MODULE.connection.once("open", () => {
 
 	const tweetsRouter = require('./routes/tweets');
 	const quandlRouter = require('./routes/quandl');
+	const scraperRouter = require('./routes/scraper');
 //  const usersRouter = require('./routes/users');
 
 	app.use('/tweets', tweetsRouter);
 	app.use('/quandl', quandlRouter);
+	app.use('/scraper', scraperRouter);
 //  app.use('/users', usersRouter);
 
 	// --------------------ここまで-------------------- //
@@ -251,8 +255,6 @@ const options = {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 };
-
-const connect_url = "mongodb://localhost/login";					// MongoDB接続先
 
 MONGOOSE_MODULE.connect(connect_url, options).catch((error: any) => {   // Mongoose接続
 
