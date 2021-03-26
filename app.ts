@@ -175,7 +175,7 @@ MONGOOSE_MODULE.connection.once("open", () => {
 		Upload
 	*/
 	// --------------------ここから-------------------- //
-	const multer = require('multer')
+// 	const multer = require('multer')
 /*
 	const upload = multer({
 			storage: multer.diskStorage({
@@ -188,17 +188,17 @@ MONGOOSE_MODULE.connection.once("open", () => {
 			})
 		})
 */
-	const upload = multer({ dest: 'uploads/' })
+// 	const upload = multer({ dest: 'uploads/' })
 
 	// アップロード画面
-	app.get('/upload', (req: any, res: any) => {
-		res.sendFile(__dirname + '/public/assets/upload.html');
-	});
-
-	// アップロード
-	app.post('/upload', upload.single('file'), (req: any, res: any) => {
-		res.send(req.file.originalname + ' upload success');
-	})
+// 	app.get('/upload', (req: any, res: any) => {
+// 		res.sendFile(__dirname + '/public/assets/upload.html');
+// 	});
+//
+// 	// アップロード
+// 	app.post('/upload', upload.single('file'), (req: any, res: any) => {
+// 		res.send(req.file.originalname + ' upload success');
+// 	})
 
 	const tweetsRouter = require('./routes/tweets');
 	const quandlRouter = require('./routes/quandl');

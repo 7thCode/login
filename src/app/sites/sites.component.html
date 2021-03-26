@@ -1,0 +1,64 @@
+<ng-container>
+	<mat-card>
+		<mat-card-header>
+			<mat-card-title>Sites</mat-card-title>
+			<div style="color:red;">{{message}}</div>
+		</mat-card-header>
+		<mat-card-content fxLayout="column">
+			<mat-card>
+				<mat-card-content>
+					<div fxLayout="column">
+						<mat-list style="max-height:400px;overflow: scroll;">
+							<mat-list-item *ngFor="let site of sites" fxLayout="row">
+								<div (click)="onGet(site._id)" mat-line>{{site.name}}</div>
+								<div (click)="onGet(site._id)" mat-line>{{site.url}}</div>
+								<div (click)="onGet(site._id)" mat-line>{{site.path}}</div>
+								<button (click)="onScrape(site._id)" color="primary" mat-mini-fab style="margin:2px;">S</button>
+								<button (click)="onUpdate(site._id, name, url, path)" color="accent" mat-mini-fab style="margin:2px;">U</button>
+								<button (click)="onDelete(site._id)" color="warn" mat-mini-fab style="margin:2px;">D</button>
+							</mat-list-item>
+						</mat-list>
+						<div fxLayout="row" fxLayoutAlign="center">
+							<div style="margin:10px;font-size:32px;font-weight:900;">
+								{{result}}
+							</div>
+						</div>
+					</div>
+				</mat-card-content>
+			</mat-card>
+		</mat-card-content>
+
+		<mat-card-actions fxLayout="column">
+			<form #form1="ngForm" fxFlex fxLayout="column" novalidate>
+
+				<mat-form-field>
+					<mat-label>name</mat-label>
+					<input type="text" #name_field="ngModel" [(ngModel)]="name" autocomplete="off" matInput maxlength="255" name="name_field" required>
+					<mat-error *ngIf="name_field.errors?.required;">入力してください</mat-error>
+					<mat-error *ngIf="name_field.errors?.maxlength">長すぎます</mat-error>
+				</mat-form-field>
+
+				<mat-form-field>
+					<mat-label>url</mat-label>
+					<textarea #url_field="ngModel" [(ngModel)]="url" autocomplete="off" matInput maxlength="255" name="url_field" required></textarea>
+					<mat-error *ngIf="url_field.errors?.required;">入力してください</mat-error>
+					<mat-error *ngIf="url_field.errors?.maxlength">長すぎます</mat-error>
+				</mat-form-field>
+
+				<mat-form-field>
+					<mat-label>path</mat-label>
+					<textarea #path_field="ngModel" [(ngModel)]="path" autocomplete="off" matInput maxlength="1000" name="path_field" required></textarea>
+					<mat-error *ngIf="path_field.errors?.required;">入力してください</mat-error>
+					<mat-error *ngIf="path_field.errors?.maxlength">長すぎます</mat-error>
+				</mat-form-field>
+
+				<div fxLayout="row">
+					<button (click)="onCreate(url, path)" [disabled]="url_field.errors?.required || path_field.errors?.required" color="primary" mat-raised-button style="margin:12px;">Create</button>
+				</div>
+			</form>
+
+
+		</mat-card-actions>
+	</mat-card>
+</ng-container>
+
