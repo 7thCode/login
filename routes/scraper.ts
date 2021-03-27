@@ -68,13 +68,13 @@ router.get('/sites/scrapeall', [
 									record.save().then((record: any) => {
 										resolve(record);
 									}).catch((error: any) => {
-										reject(error);
+										resolve(error);
 									});
 								} else {
-									reject({code: -1, message: "parse error."});
+									resolve({});
 								}
 							} catch (error) {
-								reject(error);
+								resolve(error);
 							}
 						});
 					});
@@ -82,7 +82,9 @@ router.get('/sites/scrapeall', [
 				promises.push(promise);
 
 				Promise.all(promises).then((result): void => {
-					response.json({error: null, result: result});
+					if (result.length === promises.length) {
+						response.json({error: null, result: "OK"});
+					}
 				}).catch((error): void => {
 					response.json({error: error, result: null});
 				});

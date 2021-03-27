@@ -95,8 +95,8 @@ export class SitesComponent implements OnInit {
 	/*
 	*
 	*/
-	public onCreate(url: string, path: string): void {
-		this.sitesService.post({url: url, path: path}, (network_error: any, container: {error:any, result: any}): void => {
+	public onCreate(name: string, url: string, path: string): void {
+		this.sitesService.post({name: name, url: url, path: path}, (network_error: any, container: {error:any, result: any}): void => {
 			if (!network_error) {
 				if (!container.error) {
 					this.onDraw();

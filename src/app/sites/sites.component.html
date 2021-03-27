@@ -53,7 +53,7 @@
 				</mat-form-field>
 
 				<div fxLayout="row">
-					<button (click)="onCreate(url, path)" [disabled]="url_field.errors?.required || path_field.errors?.required" color="primary" mat-raised-button style="margin:12px;">Create</button>
+					<button (click)="onCreate(name, url, path)" [disabled]="url_field.errors?.required || path_field.errors?.required" color="primary" mat-raised-button style="margin:12px;">Create</button>
 				</div>
 			</form>
 
