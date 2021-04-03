@@ -54,9 +54,9 @@
 
 				<div fxLayout="row">
 					<button (click)="onCreate(name, url, path)" [disabled]="url_field.errors?.required || path_field.errors?.required" color="primary" mat-raised-button style="margin:12px;">Create</button>
+					<button (click)="onScrapeAll()" color="warn" mat-raised-button style="margin:12px;">Scrape ALl</button>
 				</div>
 			</form>
-
 
 		</mat-card-actions>
 	</mat-card>

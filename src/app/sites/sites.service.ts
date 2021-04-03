@@ -17,9 +17,7 @@ export class SitesService {
 
 	public httpOptions: any;
 
-	constructor(
-		protected http: HttpClient
-	) {
+	constructor(protected http: HttpClient) {
 		this.httpOptions = {
 			headers: new HttpHeaders({
 				Accept: 'application/json; charset=utf-8',
@@ -71,6 +69,14 @@ export class SitesService {
 
 	public scrape(id: string, callback: any): void {
 		this.http.get('/scraper/sites/scrape/' + id, this.httpOptions).pipe(retry(3)).subscribe((container: any): void => {
+			callback(null, container);
+		}, (error: HttpErrorResponse): void => {
+			callback(error, null);
+		});
+	}
+
+	public scrapeAll(callback: any): void {
+		this.http.get('/scraper/sites/scrapeall', this.httpOptions).pipe(retry(3)).subscribe((container: any): void => {
 			callback(null, container);
 		}, (error: HttpErrorResponse): void => {
 			callback(error, null);

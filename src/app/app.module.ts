@@ -25,6 +25,7 @@ import { ChartComponent } from './chart/chart.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 import {SitesModule} from './sites/sites.module';
+import {ElementsModule} from './elements/elements.module';
 
 @NgModule({
 	declarations: [
@@ -42,6 +43,7 @@ import {SitesModule} from './sites/sites.module';
 
 		TweetModule,
 		SitesModule,
+		ElementsModule,
 
 		AppRoutingModule,
 

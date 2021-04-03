@@ -95,6 +95,24 @@ export class SitesComponent implements OnInit {
 	/*
 	*
 	*/
+	public onScrapeAll(): void {
+		this.sitesService.scrapeAll((network_error: any, container: {error:any, result: any}): void => {
+			this.result = "";
+			if (!network_error) {
+				if (!container.error) {
+					this.result = container.result;
+				} else {
+					this.message = container.error.message;
+				}
+			} else {
+				this.message = network_error.message;
+			}
+		});
+	}
+
+	/*
+	*
+	*/
 	public onCreate(name: string, url: string, path: string): void {
 		this.sitesService.post({name: name, url: url, path: path}, (network_error: any, container: {error:any, result: any}): void => {
 			if (!network_error) {

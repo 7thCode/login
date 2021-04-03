@@ -1,25 +1,7 @@
 // Express
 
-const createError = require('http-errors');
 const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-// const logger = require('morgan');
-
 const app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-// app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
 
 /*
 	Mongoose
@@ -28,35 +10,45 @@ app.use(bodyParser.urlencoded({ extended: true }));
 	MongoDBのカプセル化。(抽象レイヤ)
 
 */
-const connect_url = "mongodb://localhost/login";					// MongoDB接続先
+const connect_url = 'mongodb://localhost/login';					// MongoDB接続先
 
 const MONGOOSE_MODULE = require('mongoose');
 
 // MongoDB接続時、一度だけ実行されるハンドラ
-// データベースに接続されていることを前提とする処理はこの中に。
-MONGOOSE_MODULE.connection.once("open", () => {
+MONGOOSE_MODULE.connection.once('open', () => {
 
-	/*
-		Session
+	const path = require('path');
+	const createError = require('http-errors');
+	const cookieParser = require('cookie-parser');
+
+	// view engine setup
+	app.set('views', path.join(__dirname, 'views'));
+	app.set('view engine', 'jade');
+
+	app.use(express.json());
+	app.use(express.urlencoded({extended: false}));
+	app.use(cookieParser());
+	app.use(express.static(path.join(__dirname, 'public')));
+
+	const bodyParser = require('body-parser');
+	app.use(bodyParser.urlencoded({extended: true}));
+
+	/*	Session
 
 		Expressのクッキーセッションをデータベースで永続化
-
 	*/
-	// --------------------ここから-------------------- //
-
-	// const SESSION_MODULE = require('./session');
-	// app.use(SESSION_MODULE.session);≠
+	/* --------------------ここから--------------------　*/
 
 	const SESSION_MODULE = require('express-session');						// Express Session
-	const MONGOSTORE_CLASS = require("connect-mongo");						// 暗号化されたクッキーとデータベースに保存されたセッションを関連づける
+	const MONGOSTORE_CLASS = require('connect-mongo');						// 暗号化されたクッキーとデータベースに保存されたセッションを関連づける
 
 	app.use(SESSION_MODULE({												// sessionとMongoDBの接続
-		name: "login",	                                           			// セッション名
-		secret: "hogehoge",													// セッション暗号化キー
+		name: 'login',	                                           			// セッション名
+		secret: 'hogehoge',													// セッション暗号化キー
 		resave: false,														//
 		rolling: true,		                                       			//
 		saveUninitialized: true,											//
-		cookie: { maxAge: 365 * 24 * 60 * 60 * 1000 },						// クッキー側設定
+		cookie: {maxAge: 365 * 24 * 60 * 60 * 1000},						// クッキー側設定
 		store: MONGOSTORE_CLASS.create({									// MongoDB側接続オブジェクト
 			mongoUrl: connect_url,
 //			mongooseConnection: MONGOOSE_MODULE.connection,					// Mongoose接続
@@ -65,11 +57,10 @@ MONGOOSE_MODULE.connection.once("open", () => {
 		}),
 	}));
 
-	// --------------------ここまで-------------------- //
+	/* --------------------ここまで--------------------　*/
 
 
-	/*
-		Passport
+	/*	Passport
 
 		認証モジュール
 		アカウントレコード作成、パスワード認証/ハッシュ化などを行う
@@ -80,58 +71,60 @@ MONGOOSE_MODULE.connection.once("open", () => {
 		連携承認
 		https://knimon-software.github.io/www.passportjs.org/guide/authorize/
 	*/
-	// --------------------ここから--------------------
+	/* --------------------ここから--------------------　*/
 
 	const PASSPORT_MODULE = require('passport');									// Passport 認証用モジュール
 	const LOCAL_STRATEGY_PLUGIN = require('passport-local').Strategy;				// パスワード認証用Passportプラグイン
-	const LocalAccount = require("./models/account");								// Mongooseアカウント定義
+	const LocalAccount = require('./models/account');								// Mongooseアカウント定義
 
-	PASSPORT_MODULE.serializeUser((user: any, done: any) => { done(null, user) });
-	PASSPORT_MODULE.deserializeUser((user: any, done: any) => { done(null, user) });
+	PASSPORT_MODULE.serializeUser((user: any, done: any) => {
+		done(null, user);
+	});
+	PASSPORT_MODULE.deserializeUser((user: any, done: any) => {
+		done(null, user);
+	});
 	PASSPORT_MODULE.use(new LOCAL_STRATEGY_PLUGIN(LocalAccount.authenticate()));	// Mongooseアカウント定義 - パスワード認証
 
 	app.use(PASSPORT_MODULE.initialize());											// Passportの使用前に必須
 	app.use(PASSPORT_MODULE.session());												// Passportの使用前に必須
 
-	// --------------------ここまで-------------------- //
+	/* --------------------ここまで--------------------　*/
 
 
-	/*
-		Application
-	*/
-	// --------------------ここから-------------------- //
+	/*	Application	*/
+	/* --------------------ここから--------------------　*/
 
 	// ログイン済み？
 	app.get('/user', (req: any, res: any) => {
 		if (req.user) {
-			res.json({status:0, value: req.user});
+			res.json({status: 0, value: req.user});
 		} else {
-			res.json({status:-1, value: null});
+			res.json({status: -1, value: null});
 		}
 	});
 
 	// ログイン
 	app.post('/login', (req: any, res: any) => {
 		if (!req.user) {
-			PASSPORT_MODULE.authenticate("local", (error: any, account: any) => {
+			PASSPORT_MODULE.authenticate('local', (error: any, account: any) => {
 				if (!error) {
 					if (account) {
 						req.login(account, (error: any) => {
 							if (!error) {
-								res.json({status: 0, value: req.user, message: "OK"});
+								res.json({status: 0, value: req.user, message: 'OK'});
 							} else {
 								res.json({status: -1, value: {}, message: error.message});
 							}
 						});
 					} else {
-						res.json({status: -2, message: "user found or password missmatch."});
+						res.json({status: -2, message: 'user found or password missmatch.'});
 					}
 				} else {
 					res.json({status: -1, message: error.message});
 				}
 			})(req, res);
 		} else {
-			res.json({status: -2, message: "already.."});
+			res.json({status: -2, message: 'already..'});
 		}
 	});
 
@@ -139,80 +132,35 @@ MONGOOSE_MODULE.connection.once("open", () => {
 	app.get('/logout', (req: any, res: any) => {
 		if (req.user) {
 			req.logout();
-			res.json({status:0, value: null, message:"OK"});
+			res.json({status: 0, value: null, message: 'OK'});
 		} else {
-			res.json({status:-1, value: {}, message: "not logged in."});
+			res.json({status: -1, value: {}, message: 'not logged in.'});
 		}
 	});
 
 	// ユーザ登録
 	app.post('/register', (req: any, res: any) => {
-		LocalAccount.register(new LocalAccount({ username: req.body.username }), req.body.password).then(() => {
-			res.json({status:0, value: null, message:"OK"});
+		LocalAccount.register(new LocalAccount({username: req.body.username}), req.body.password).then(() => {
+			res.json({status: 0, value: null, message: 'OK'});
 		}).catch((error: any) => {
-			res.json({status:-1, message:error.message});
-		})
+			res.json({status: -1, message: error.message});
+		});
 	});
-
-/*
-	// 秘匿画面
-	app.get('/secret', (req, res) => {
-		if (req.user) {
-			res.render('index', { title: req.user.username });
-		} else {
-			res.sendFile(__dirname + '/public/assets/login.html');
-		}
-	});
-
-	//  登録画面
-	app.get('/regist', (req, res) => {
-		res.sendFile(__dirname + '/public/assets/regist.html');
-	});
-
-
-*/
-	/*
-		Upload
-	*/
-	// --------------------ここから-------------------- //
-// 	const multer = require('multer')
-/*
-	const upload = multer({
-			storage: multer.diskStorage({
-				destination: (req, file, cb) => {
-					cb(null, __dirname + '/uploads');
-				},
-				filename: (req, file, cb) => {
-					cb(null, file.originalname);
-				}
-			})
-		})
-*/
-// 	const upload = multer({ dest: 'uploads/' })
-
-	// アップロード画面
-// 	app.get('/upload', (req: any, res: any) => {
-// 		res.sendFile(__dirname + '/public/assets/upload.html');
-// 	});
-//
-// 	// アップロード
-// 	app.post('/upload', upload.single('file'), (req: any, res: any) => {
-// 		res.send(req.file.originalname + ' upload success');
-// 	})
 
 	const tweetsRouter = require('./routes/tweets');
 	const quandlRouter = require('./routes/quandl');
-	const scraperRouter = require('./routes/scraper');
-//  const usersRouter = require('./routes/users');
+	const scraperRouter = require('./routes/scraper/api');
 
 	app.use('/tweets', tweetsRouter);
 	app.use('/quandl', quandlRouter);
 	app.use('/scraper', scraperRouter);
-//  app.use('/users', usersRouter);
 
-	// --------------------ここまで-------------------- //
+	/* --------------------ここまで--------------------　*/
 
-	// エラー
+
+	/*	エラー処理	*/
+	/* --------------------ここから--------------------　*/
+
 	app.use((req: any, res: any, next: any) => {
 		next(createError(404));
 	});
@@ -224,28 +172,32 @@ MONGOOSE_MODULE.connection.once("open", () => {
 		res.render('error');
 	});
 
-	// --------------------ここまで--------------------
+	/* --------------------ここまで--------------------　*/
 
 });
 
+
+/*	データベース	*/
+/* --------------------ここから--------------------　*/
+
 // データベースクローズ時
-MONGOOSE_MODULE.connection.on("closed", () => {
-	console.log("closed");
+MONGOOSE_MODULE.connection.on('closed', () => {
+	console.log('closed');
 });
 
 // データベース切断時
-MONGOOSE_MODULE.connection.on("disconnected", () => {
-	console.log("disconnected");
+MONGOOSE_MODULE.connection.on('disconnected', () => {
+	console.log('disconnected');
 });
 
 // データベース再接続時
-MONGOOSE_MODULE.connection.on("reconnected", () => {
-	console.log("reconnected");
+MONGOOSE_MODULE.connection.on('reconnected', () => {
+	console.log('reconnected');
 });
 
 // データベース接続エラー時
-MONGOOSE_MODULE.connection.on("error", (error: any) => {
-	console.log("error");
+MONGOOSE_MODULE.connection.on('error', (error: any) => {
+	console.log('error');
 });
 
 // Mongo接続オプション
@@ -259,5 +211,7 @@ const options = {
 MONGOOSE_MODULE.connect(connect_url, options).catch((error: any) => {   // Mongoose接続
 
 });
+
+/* --------------------ここまで--------------------　*/
 
 module.exports = app;

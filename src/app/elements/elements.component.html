@@ -1,0 +1,26 @@
+<ng-container>
+	<mat-card>
+		<mat-card-header>
+			<mat-card-title>Elements</mat-card-title>
+			<div style="color:red;">{{message}}</div>
+		</mat-card-header>
+		<mat-card-content fxLayout="column">
+			<mat-card>
+				<mat-card-content>
+					<div fxLayout="column">
+						<mat-list style="max-height:400px;overflow: scroll;">
+							<mat-list-item *ngFor="let element of elements" fxLayout="row">
+								<div mat-line>{{element.name}}</div>
+								<div mat-line>{{element.create}}</div>
+								<div mat-line>{{element.content.text}}</div>
+								<button (click)="onDelete(element._id)" color="warn" mat-mini-fab style="margin:2px;">D</button>
+							</mat-list-item>
+						</mat-list>
+					</div>
+				</mat-card-content>
+			</mat-card>
+		</mat-card-content>
+
+	</mat-card>
+</ng-container>
+
