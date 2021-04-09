@@ -3,6 +3,8 @@
 const express = require('express');
 const app = express();
 
+const CONFIG_MODULE: any = require("config");
+
 /*
 	Mongoose
 
@@ -10,7 +12,12 @@ const app = express();
 	MongoDBのカプセル化。(抽象レイヤ)
 
 */
-const connect_url = "mongodb://loginmaster:dK2Jxiuh3cjb@localhost/login";					// MongoDB接続先
+
+let connect_url: string = "mongodb://localhost/login";
+
+if (CONFIG_MODULE.db) {
+	 connect_url = "mongodb://" + CONFIG_MODULE.db.user + ":" + CONFIG_MODULE.db.password + "@localhost/login";
+}
 
 const MONGOOSE_MODULE = require('mongoose');
 
