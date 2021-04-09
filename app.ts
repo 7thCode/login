@@ -10,7 +10,7 @@ const app = express();
 	MongoDBのカプセル化。(抽象レイヤ)
 
 */
-const connect_url = 'mongodb://localhost/login';					// MongoDB接続先
+const connect_url = "mongodb://loginmaster:dK2Jxiuh3cjb@localhost/login";					// MongoDB接続先
 
 const MONGOOSE_MODULE = require('mongoose');
 
@@ -150,10 +150,12 @@ MONGOOSE_MODULE.connection.once('open', () => {
 	const tweetsRouter = require('./routes/tweets');
 	const quandlRouter = require('./routes/quandl');
 	const scraperRouter = require('./routes/scraper/api');
+	const socketRouter = require('./routes/socket/api');
 
 	app.use('/tweets', tweetsRouter);
 	app.use('/quandl', quandlRouter);
 	app.use('/scraper', scraperRouter);
+	app.use('/socket', socketRouter);
 
 	/* --------------------ここまで--------------------　*/
 

@@ -1,0 +1,11 @@
+extends layout
+
+block content
+	div(style="display: flex;flex-direction: column;")
+		each database in databases
+			div(style="display: flex;flex-direction: row;margin: 8px;")
+				img(src='#{database.image}' style='width:62px')
+				div(style="display: flex;flex-direction: column;width:100%;color:#303030;background-color:#eeeeee;")
+					a(href="/quandl/dataset/NASDAQOMX/NQSE35CAD/1")
+						div(style="margin: 8px;font-size:16px;font-weight:900;") #{database.database_code}
+					div(style="margin: 8px;font-size:10px;") #{database.description}

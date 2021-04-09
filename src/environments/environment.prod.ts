@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+	webSocket: "wss://seventh-code.com/ws",
 };

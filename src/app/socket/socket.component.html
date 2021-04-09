@@ -1,0 +1,8 @@
+<button (click)="send()">ping!</button>
+<div>{{message}}</div>
+
+<mat-form-field>
+	<input matInput [(ngModel)]="text" type="text">
+</mat-form-field>
+
+<button (click)="broadcast(text)">broadcast!</button>

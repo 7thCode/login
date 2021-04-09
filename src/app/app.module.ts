@@ -27,10 +27,15 @@ import {NgxChartsModule} from "@swimlane/ngx-charts";
 import {SitesModule} from './sites/sites.module';
 import {ElementsModule} from './elements/elements.module';
 
+import {SocketModule} from './socket/socket.module';
+
+import { SocketComponent } from './socket/socket.component';
+
 @NgModule({
 	declarations: [
 		AppComponent,
 		ChartComponent,
+		SocketComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -44,6 +49,7 @@ import {ElementsModule} from './elements/elements.module';
 		TweetModule,
 		SitesModule,
 		ElementsModule,
+		SocketModule,
 
 		AppRoutingModule,
 

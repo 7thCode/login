@@ -17,7 +17,28 @@ gulp.task('compile', () => {
 		.pipe(gulp.dest('./'));
 });
 
-gulp.task('default', gulp.series('compile'), () => {
+gulp.task('build', () => {
+
+	return gulp.src([
+		'bin/www',
+		'public/**/*.js',
+		'public/**/*.css',
+		'public/**/*.html',
+		'public/images/**/*.*',
+		'public/iconfont/**/*.*',
+		'public/favicon/**/*.*',
+		'models/**/*.js',
+		'routes/**/*.js',
+		'views/**/*.jade',
+		'app.js',
+		'package.json',
+		'package-lock.json',
+	], {base: './', allowEmpty: true})
+		.pipe(gulp.dest('product'));
+
+});
+
+gulp.task('default', gulp.series('compile', 'build'), () => {
 
 });
 
