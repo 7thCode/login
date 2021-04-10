@@ -73,7 +73,7 @@ export abstract class SocketResponderBase {
 		});
 	}
 
-	protected broadcast(data): void {
+	protected broadcast(data: any): void {
 		this.emitter.emit('broadcast', data);
 	}
 

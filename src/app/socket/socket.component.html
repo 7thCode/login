@@ -1,8 +1,21 @@
-<button (click)="send()">ping!</button>
-<div>{{message}}</div>
+<ng-container>
+	<mat-card>
+		<mat-card-content>
+			<div fxLayout="column" fxlayoutAlign="center">
 
-<mat-form-field>
-	<input matInput [(ngModel)]="text" type="text">
-</mat-form-field>
-
-<button (click)="broadcast(text)">broadcast!</button>
+				<div fxLayout="row">
+					<mat-form-field>
+						<input matInput [(ngModel)]="text" type="text">
+					</mat-form-field>
+					<button mat-raised-button color="primary" (click)="broadcast(text)">broadcast!</button>
+				</div>
+				<div fxLayout="column" style="margin:20px;">
+					<div style="font-size:26px;">{{message}}</div>
+				</div>
+				<div fxLayout="column" style="margin:20px;">
+					<button mat-raised-button color="warn" style="width:fit-content" (click)="send()">ping!</button>
+				</div>
+			</div>
+		</mat-card-content>
+	</mat-card>
+</ng-container>

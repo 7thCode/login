@@ -158,11 +158,13 @@ MONGOOSE_MODULE.connection.once('open', () => {
 	const quandlRouter = require('./routes/quandl');
 	const scraperRouter = require('./routes/scraper/api');
 	const socketRouter = require('./routes/socket/api');
+	const apnsRouter = require('./routes/apns');
 
 	app.use('/tweets', tweetsRouter);
 	app.use('/quandl', quandlRouter);
 	app.use('/scraper', scraperRouter);
 	app.use('/socket', socketRouter);
+	app.use('/apns', apnsRouter);
 
 	/* --------------------ここまで--------------------　*/
 
