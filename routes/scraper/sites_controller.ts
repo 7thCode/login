@@ -9,7 +9,8 @@ const Element: any = require('../../models/element');
 const https = require('https');
 const libxmljs: any = require('libxmljs');
 const nodemailer: any = require('nodemailer');
-const config: any = require('../config');
+
+const CONFIG_MODULE: any = require("config");
 
 export class Sites {
 
@@ -118,7 +119,7 @@ export class Sites {
 
 				Promise.all(promises).then((result): void => {
 					if (result.length === promises.length) {
-						this.sendMail('oda.mikio@gmail.com', 'oda.mikio@gmail.com', config.key2, 'subject', 'text', (error: any, info: any) => {
+						this.sendMail('oda.mikio@gmail.com', 'oda.mikio@gmail.com', CONFIG_MODULE.key2, 'subject', 'text', (error: any, info: any) => {
 							response.json({error: error, result: 'OK'});
 						});
 					}

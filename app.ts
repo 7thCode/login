@@ -164,9 +164,7 @@ MONGOOSE_MODULE.connection.once('open', () => {
 	app.use('/scraper', scraperRouter);
 	app.use('/socket', socketRouter);
 
-
 	/* --------------------ここまで--------------------　*/
-
 
 	/*	エラー処理	*/
 	/* --------------------ここから--------------------　*/
