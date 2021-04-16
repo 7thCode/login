@@ -14,6 +14,9 @@ const SocketResponder = require('./socket_responder');
 
 const socket_responder = new SocketResponder(socket, emitter);
 
+
+const schedule = require("node-schedule");
+
 /* GET home page. */
 router.get('/', (req: any, res: any, next: any) => {
   res.render('index', { title: 'Express' });
@@ -24,5 +27,11 @@ router.get('/broadcast/:data', (req: any, res: any, next: any) => {
 	res.json({code: 0, message: ""});
 	// res.render('index', { title: 'Broadcast!' });
 });
+
+const job = schedule.scheduleJob({second:0}, () => {
+		const time = new Date().toLocaleString();
+		socket_responder.broadcast({message: time});
+	}
+);
 
 module.exports = router;

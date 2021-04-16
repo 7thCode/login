@@ -29,13 +29,10 @@ import {ElementsModule} from './elements/elements.module';
 
 import {SocketModule} from './socket/socket.module';
 
-import { SocketComponent } from './socket/socket.component';
-
 @NgModule({
 	declarations: [
 		AppComponent,
 		ChartComponent,
-		SocketComponent,
 	],
 	imports: [
 		BrowserModule,
