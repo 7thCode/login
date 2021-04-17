@@ -9,10 +9,6 @@ export class SocketResponder extends SocketResponderBase {
 		super(socket, emitter);
 	}
 
-	protected onOpen(): void {
-
-	}
-
 	protected onClose(): void {
 
 	}
@@ -22,31 +18,20 @@ export class SocketResponder extends SocketResponderBase {
 	}
 
 	public onResponse(client: any, data: any): void {
-
-		this.count++;
 		const address = client._socket.remoteAddress;
-
+		this.count++;
 		data.message = 'response! ' + address + "(" + this.count + ")";
-
 		return data;
 	}
 
 	public onResponseOthers(client: any, data: any): any {
-
 		const address = client._socket.remoteAddress;
 		// 		const r = IPV6.ToIPV6(client._socket.remoteAddress);
-
 		data.message = 'others! ' + address + "(" + this.count + ")";
 		return data;
 	}
 
 	public onBroadcast(client: any, data: any): any {
-
-	//	const address = client._socket.remoteAddress;
-		// 		const r = IPV6.ToIPV6(client._socket.remoteAddress);
-
-		// data.message = 'broadcast! ' + data.message + "(" + this.count + ")";
-
 		return data;
 	}
 

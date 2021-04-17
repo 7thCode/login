@@ -14,7 +14,6 @@ const SocketResponder = require('./socket_responder');
 
 const socket_responder = new SocketResponder(socket, emitter);
 
-
 const schedule = require("node-schedule");
 
 /* GET home page. */

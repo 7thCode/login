@@ -30,11 +30,6 @@ export abstract class SocketResponderBase {
 		this.socket = socket;
 
 		this.socket.on('connection', (connected_client: any): void => {
-
-			connected_client.on('open', (): void => {
-				this.onOpen();
-			});
-
 			connected_client.on('message', (data: string, flags: any): void => {
 				const packet = JSON.parse(data);
 				if (this.onRequest(connected_client, packet)) {
@@ -58,27 +53,23 @@ export abstract class SocketResponderBase {
 				this.onClose();
 			});
 
-			// server -> client
-			this.emitter.on('broadcast', (data: any): void => {
-				socket.clients.forEach((each_client: any): void => {
-					if (each_client.readyState === websocket.OPEN) {
-						const response = this.onBroadcast(each_client, data);
-						if (response) {
-							each_client.send(JSON.stringify(response));
-						}
-					}
-				});
-			});
+		});
 
+		// server -> client
+		this.emitter.on('broadcast', (data: any): void => {
+			socket.clients.forEach((each_client: any): void => {
+				if (each_client.readyState === websocket.OPEN) {
+					const response = this.onBroadcast(each_client, data);
+					if (response) {
+						each_client.send(JSON.stringify(response));
+					}
+				}
+			});
 		});
 	}
 
 	protected broadcast(data: any): void {
 		this.emitter.emit('broadcast', data);
-	}
-
-	protected onOpen(): void {
-
 	}
 
 	protected onClose(): void {
