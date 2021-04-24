@@ -1,0 +1,15 @@
+<ng-container>
+	<mat-card>
+		<mat-card-content style="height:600px;width:600px;overflow: scroll;">
+			<div fxLayout="column" fxlayoutAlign="center">
+				<div fxLayout="column">
+					<div *ngFor="let tick of ticks" fxLayout="row">
+						<div fxFlex="33">{{tick.symbol}}</div>
+						<div fxFlex="33">high:{{tick.high}}</div>
+						<div fxFlex>volume:{{tick.volume}}</div>
+					</div>
+				</div>
+			</div>
+		</mat-card-content>
+	</mat-card>
+</ng-container>

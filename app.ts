@@ -155,14 +155,14 @@ MONGOOSE_MODULE.connection.once('open', () => {
 	});
 
 	const tweetsRouter = require('./routes/tweets');
-	// const quandlRouter = require('./routes/quandl');
 	const scraperRouter = require('./routes/scraper/api');
-	const socketRouter = require('./routes/socket/api');
+	// const socketRouter = require('./routes/socket/api');
+	const binanceRouter = require('./routes/binance/api');
 
 	app.use('/tweets', tweetsRouter);
-	// app.use('/quandl', quandlRouter);
 	app.use('/scraper', scraperRouter);
-	app.use('/socket', socketRouter);
+	// app.use('/socket', socketRouter);
+	app.use('/binance', binanceRouter);
 
 	/* --------------------ここまで--------------------　*/
 

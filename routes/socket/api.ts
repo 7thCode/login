@@ -24,13 +24,12 @@ router.get('/', (req: any, res: any, next: any) => {
 router.get('/broadcast/:data', (req: any, res: any, next: any) => {
 	socket_responder.broadcast({message: req.params.data}); // client === null -> broadcast!
 	res.json({code: 0, message: ""});
-	// res.render('index', { title: 'Broadcast!' });
 });
 
-const job = schedule.scheduleJob({second:0}, () => {
-		const time = new Date().toLocaleString();
-		socket_responder.broadcast({message: time});
-	}
-);
+ const job = schedule.scheduleJob({second:0}, () => {
+ 		const time = new Date().toLocaleString();
+ 		socket_responder.broadcast({message: time});
+ 	}
+ );
 
 module.exports = router;

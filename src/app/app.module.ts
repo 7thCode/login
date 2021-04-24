@@ -28,6 +28,7 @@ import {SitesModule} from './sites/sites.module';
 import {ElementsModule} from './elements/elements.module';
 
 import {SocketModule} from './socket/socket.module';
+import {BinanceModule} from './binance/binance.module';
 
 @NgModule({
 	declarations: [
@@ -47,6 +48,7 @@ import {SocketModule} from './socket/socket.module';
 		SitesModule,
 		ElementsModule,
 		SocketModule,
+		BinanceModule,
 
 		AppRoutingModule,
 
