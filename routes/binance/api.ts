@@ -33,8 +33,11 @@ interface Ticker {
 }
 
 binance.futuresMiniTickerStream( (miniTicker: Ticker[]) => {
-	const oneTick:Ticker = miniTicker[0];
-	socket_responder.broadcast(miniTicker);
+ 	const oneTick:Ticker = miniTicker[0];
+ 	socket_responder.broadcast(miniTicker);
 } );
+
+// binance.futuresBookTickerStream( 'BTCUSDT', console.log );
+// binance.futuresBookTickerStream( 'BTCUSDT', (info) => {console.log(info)} );
 
 module.exports = router;
