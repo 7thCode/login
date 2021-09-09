@@ -16,12 +16,15 @@
 			<a routerLink="chart" style="margin:4px;">Chart</a>
 			<a routerLink="sites" style="margin:4px;">Sites</a>
 			<a routerLink="elements" style="margin:4px;">Elements</a>
+			<a routerLink="sample" style="margin:4px;">Sample</a>
 		<!--	<a routerLink="socket" style="margin:4px;">Socket</a> -->
 			<a routerLink="binance" style="margin:4px;">Binance</a>
+			<a routerLink="password" style="margin:4px;">Password</a>
 		</div>
 	</mat-drawer>
 
 	<div class="example-sidenav-content">
+		<!--
 		<div *ngIf="!user" fxLayout="row" fxLayoutAlign="center center" class="container-with-header">
 			<mat-card fxFlex="45%">
 				<mat-card-header>
@@ -58,6 +61,11 @@
 		</div>
 
 		<div *ngIf="user" fxLayout="row" fxLayoutAlign="center center" class="container-with-header">
+			<router-outlet></router-outlet>
+		</div>
+		-->
+
+		<div fxLayout="row" fxLayoutAlign="center center" class="container-with-header">
 			<router-outlet></router-outlet>
 		</div>
 	</div>

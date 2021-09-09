@@ -3,7 +3,7 @@
 const express = require('express');
 const app = express();
 
-const CONFIG_MODULE: any = require("config");
+const CONFIG_MODULE: any = require('config');
 
 /*
 	Mongoose
@@ -13,13 +13,14 @@ const CONFIG_MODULE: any = require("config");
 
 */
 
-let connect_url: string = "mongodb://localhost/login";
+let connect_url: string = 'mongodb://localhost/login';
 
 if (CONFIG_MODULE.db) {
-	 connect_url = "mongodb://" + CONFIG_MODULE.db.user + ":" + CONFIG_MODULE.db.password + "@localhost/login";
+	connect_url = 'mongodb://' + CONFIG_MODULE.db.user + ':' + CONFIG_MODULE.db.password + '@localhost/login';
 }
 
 const MONGOOSE_MODULE = require('mongoose');
+const binanceRouter = require('./routes/binance/api');
 
 // MongoDB接続時、一度だけ実行されるハンドラ
 MONGOOSE_MODULE.connection.once('open', () => {
@@ -29,13 +30,16 @@ MONGOOSE_MODULE.connection.once('open', () => {
 	const cookieParser = require('cookie-parser');
 
 	// view engine setup
-	app.set('views', path.join(__dirname, 'views'));
+	// app.set('views', path.join(__dirname, 'views'));
+
+	app.set("views", "./views");
 	app.set('view engine', 'jade');
 
 	app.use(express.json());
 	app.use(express.urlencoded({extended: false}));
 	app.use(cookieParser());
-	app.use(express.static(path.join(__dirname, 'public')));
+//	app.use(express.static(path.join(__dirname, 'public')));
+	app.use(express.static("./public"));
 
 	const bodyParser = require('body-parser');
 	app.use(bodyParser.urlencoded({extended: true}));
@@ -158,11 +162,13 @@ MONGOOSE_MODULE.connection.once('open', () => {
 	const scraperRouter = require('./routes/scraper/api');
 	// const socketRouter = require('./routes/socket/api');
 	const binanceRouter = require('./routes/binance/api');
+	const passwordRouter = require('./routes/password/api');
 
 	app.use('/tweets', tweetsRouter);
 	app.use('/scraper', scraperRouter);
 	// app.use('/socket', socketRouter);
 	app.use('/binance', binanceRouter);
+	app.use('/password', passwordRouter);
 
 	/* --------------------ここまで--------------------　*/
 
@@ -223,3 +229,4 @@ MONGOOSE_MODULE.connect(connect_url, options).catch((error: any) => {   // Mongo
 /* --------------------ここまで--------------------　*/
 
 module.exports = app;
+

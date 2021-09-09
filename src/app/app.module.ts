@@ -29,11 +29,16 @@ import {ElementsModule} from './elements/elements.module';
 
 import {SocketModule} from './socket/socket.module';
 import {BinanceModule} from './binance/binance.module';
+import { SampleComponent } from './sample/sample.component';
+import {SampleModule} from './sample/sample.module';
+import { PasswordComponent } from './password/password.component';
+import {PasswordModule} from './password/password.module';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		ChartComponent,
+		SampleComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -49,6 +54,8 @@ import {BinanceModule} from './binance/binance.module';
 		ElementsModule,
 		SocketModule,
 		BinanceModule,
+		SampleModule,
+		PasswordModule,
 
 		AppRoutingModule,
 

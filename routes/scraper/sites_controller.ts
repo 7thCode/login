@@ -10,7 +10,7 @@ const https = require('https');
 const libxmljs: any = require('libxmljs');
 const nodemailer: any = require('nodemailer');
 
-const CONFIG_MODULE: any = require("config");
+const CONFIG_MODULE: any = require('config');
 
 export class Sites {
 
@@ -116,17 +116,18 @@ export class Sites {
 					});
 				});
 				promises.push(promise);
-
-				Promise.all(promises).then((result): void => {
-					if (result.length === promises.length) {
-						this.sendMail('oda.mikio@gmail.com', 'oda.mikio@gmail.com', CONFIG_MODULE.key2, 'subject', 'text', (error: any, info: any) => {
-							response.json({error: error, result: 'OK'});
-						});
-					}
-				}).catch((error): void => {
-					response.json({error: error, result: null});
-				});
 			});
+
+			Promise.all(promises).then((result): void => {
+
+				this.sendMail('oda.mikio@gmail.com', 'oda.mikio@gmail.com', CONFIG_MODULE.key2, 'subject', 'text', (error: any, info: any) => {
+					response.json({error: error, result: 'OK'});
+				});
+
+			}).catch((error): void => {
+				response.json({error: error, result: null});
+			});
+
 		}).catch((error: any) => {
 			response.json({error: error, result: null});
 		});
