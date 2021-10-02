@@ -8,6 +8,7 @@ import {ElementsComponent} from './elements/elements.component';
 import {BinanceComponent} from './binance/binance.component';
 import {SampleComponent} from './sample/sample.component';
 import {PasswordComponent} from './password/password.component';
+import {GensimComponent} from './gensim/gensim.component';
 
 const routes: Routes = [
 	{path: "tweet", component: TweetComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
 	{path: "elements", component: ElementsComponent},
 	{path: "sample", component: SampleComponent},
 	{path: "password", component: PasswordComponent},
+	{path: "gensim", component: GensimComponent},
 	{path: '', component: TweetComponent},
 ];
 

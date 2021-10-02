@@ -38,4 +38,22 @@ export class PasswordService {
 			callback({code: -1, message: error.message}, null);
 		});
 	}
+
+	public isMatch(password: any): Promise<any> {
+		return new Promise<any>((resolve, reject) => {
+			this.http.get('/password/match/' + password, this.httpOptions).pipe(retry(3)).subscribe((result: any): void => {
+				if (result) {
+					if (result.status === 0) {
+						resolve(result.value);
+					} else {
+						reject({code: 1, message: 'server error. 4324'});
+					}
+				} else {
+					reject(this.networkError);
+				}
+			}, (error: HttpErrorResponse): void => {
+				reject({code: -1, message: error.message});
+			});
+		})
+	}
 }

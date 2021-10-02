@@ -10,4 +10,8 @@ router.get('/strength/:password', [(request: any, response: any): void => {
 	password_controller.strength(request, response);
 }]);
 
+router.get('/match/:password', [(request: any, response: any): void => {
+	password_controller.match(request, response);
+}]);
+
 module.exports = router;

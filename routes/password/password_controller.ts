@@ -25,6 +25,16 @@ export class Password {
 		}
 	}
 
+	public match(request: any, response: any): void {
+		try {
+			const password = request.params.password;
+			const match = (password === "ab");
+			response.json({match: match})
+		} catch (error) {
+			response.json({error: error, result: null});
+		}
+	}
+
 }
 
 module.exports = Password;

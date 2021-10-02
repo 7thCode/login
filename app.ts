@@ -19,8 +19,11 @@ if (CONFIG_MODULE.db) {
 	connect_url = 'mongodb://' + CONFIG_MODULE.db.user + ':' + CONFIG_MODULE.db.password + '@localhost/login';
 }
 
+console.log(connect_url);
+
 const MONGOOSE_MODULE = require('mongoose');
 const binanceRouter = require('./routes/binance/api');
+const passwordRouter = require('./routes/password/api');
 
 // MongoDB接続時、一度だけ実行されるハンドラ
 MONGOOSE_MODULE.connection.once('open', () => {
@@ -163,12 +166,14 @@ MONGOOSE_MODULE.connection.once('open', () => {
 	// const socketRouter = require('./routes/socket/api');
 	const binanceRouter = require('./routes/binance/api');
 	const passwordRouter = require('./routes/password/api');
+	const gensimRouter = require('./routes/gensim/api');
 
 	app.use('/tweets', tweetsRouter);
 	app.use('/scraper', scraperRouter);
 	// app.use('/socket', socketRouter);
 	app.use('/binance', binanceRouter);
 	app.use('/password', passwordRouter);
+	app.use('/gensim', gensimRouter);
 
 	/* --------------------ここまで--------------------　*/
 

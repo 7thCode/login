@@ -30,7 +30,9 @@ gulp.task('build', () => {
 		'models/**/*.js',
 		'routes/**/*.js',
 		'views/**/*.jade',
+		'vector/**/*.*',
 		'app.js',
+		'api.py',
 		'package.json',
 		'package-lock.json',
 	], {base: './', allowEmpty: true})

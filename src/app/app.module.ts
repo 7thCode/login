@@ -33,12 +33,15 @@ import { SampleComponent } from './sample/sample.component';
 import {SampleModule} from './sample/sample.module';
 import { PasswordComponent } from './password/password.component';
 import {PasswordModule} from './password/password.module';
+import { GensimComponent } from './gensim/gensim.component';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		ChartComponent,
 		SampleComponent,
+  		GensimComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -67,6 +70,7 @@ import {PasswordModule} from './password/password.module';
 		MatIconModule,
 		MatCardModule,
 		MatSidenavModule,
+		MatListModule,
 		NgxChartsModule
 	],
 	providers: [AuthService],

@@ -1,7 +1,11 @@
-from flask import Flask, request, jsonify
+# -*- coding: utf-8 -*-
 
+from flask import Flask, request, jsonify
 app = Flask(__name__, static_folder='./public', static_url_path='')
 
+from gensim.models import KeyedVectors
+model_dir = './vector/entity_vector.model.bin'
+model = KeyedVectors.load_word2vec_format(model_dir, binary=True)
 
 def popular(password):
 	mediocre = ['qqww1122', 'hottie', '7777777', 'letmein', 'donald', 'master', '123qwe', 'qwerty123',
@@ -49,6 +53,28 @@ def api():
 			return jsonify({'status': 2, 'value': 0})
 	else:
 		return jsonify({'status': 3, 'value': 0})
+
+def split(data):
+	result = []
+	if data != None:
+		for word in data.split(','):
+			result.append("[" + word + "]")
+	return result
+
+
+@app.route('/similar', methods=['GET'])
+def similar():
+	try:
+		answer = "[]"
+		positive_words = split(request.args.get('p'))
+		negative_words = split(request.args.get('n'))
+
+		if len(negative_words) == 0:
+			answer = model.most_similar(positive=positive_words)
+		else:
+			answer = model.most_similar(positive=positive_words, negative=negative_words)
+	finally:
+		return jsonify(answer)
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0')

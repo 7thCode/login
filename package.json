@@ -55,7 +55,7 @@
 		"passport-local-mongoose": "^6.1.0",
 		"quandl": "0.0.6",
 		"request": "^2.88.2",
-		"rxjs": "~6.6.3",
+		"rxjs": "^6.6.7",
 		"terminal": "^0.1.4",
 		"tslib": "^2.1.0",
 		"zone.js": "~0.11.3"
@@ -74,6 +74,7 @@
 		"gulp-typescript": "^5.0.1",
 		"postcss": "^8.3.6",
 		"protractor": "~7.0.0",
+		"rx": "^4.1.0",
 		"ts-node": "~9.1.1",
 		"tslint": "~6.1.0",
 		"typescript": "~4.2.3"
